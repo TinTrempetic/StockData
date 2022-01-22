@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using StockData.Services.FinnhubService;
+using StockData.Infrastructure;
 
 namespace StockData
 {
@@ -20,10 +21,8 @@ namespace StockData
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddCors();
-            //services.AddHttpClient<Service>();
             services.AddMediatR(typeof(Startup));
 
             services.AddScoped<IFinnhubService, FinnhubService>();
