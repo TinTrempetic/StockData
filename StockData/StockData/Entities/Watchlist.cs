@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace StockData.Domain
+namespace StockData.Entities
 {
     public class Watchlist
     {

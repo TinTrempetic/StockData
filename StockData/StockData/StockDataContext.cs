@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using StockData.Domain;
+using StockData.Entities;
 using System.IO;
 
-namespace StockData.Infrastructure
+namespace StockData
 {
     public class StockDataContext : DbContext
     {

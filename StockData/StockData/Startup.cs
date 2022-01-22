@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using StockData.Services.FinnhubService;
-using StockData.Infrastructure;
 
 namespace StockData
 {
