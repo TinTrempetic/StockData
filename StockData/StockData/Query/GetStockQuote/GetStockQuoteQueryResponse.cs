@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.ComponentModel;
-using System.Text.Json.Serialization;
 
 namespace StockData.Query.GetStockQuote
 {
