@@ -23,6 +23,7 @@ namespace StockData.Infrastructure
                     .AddJsonFile("appsettings.json")
                     .Build();
                 var connectionString = configuration.GetConnectionString("ConnectionString");
+                // TODO: Get connection string from appsettings
                 optionsBuilder.UseSqlServer("Server=localhost;Database=StockData;Trusted_Connection=True;");
             }
         }
