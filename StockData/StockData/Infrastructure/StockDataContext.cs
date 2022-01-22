@@ -10,10 +10,6 @@ namespace StockData.Infrastructure
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Watchlist> Products {  get; set; }
 
-        //public StockDataContext(DbContextOptions options) : base(options)
-        //{
-        //}
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
