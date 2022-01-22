@@ -1,28 +1,32 @@
-﻿//using System.Net.Http;
-//using System.Threading;
-//using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
-//namespace StockData.Services.FinnhubService
-//{
-//    public class FinnhubService : IFinnhubService
-//    {
-//        public HttpClient client;
-//        string token = "c7bfc4qad3ia366ft1k0";
+namespace StockData.Services.FinnhubService
+{
+    public class FinnhubService : IFinnhubService
+    {
+        // TODO: Move this to db
+        string token = "c7bfc4qad3ia366ft1k0";
 
-//        public FinnhubService(HttpClient client)
-//        {
-//            this.client = client;
-//        }
+        public FinnhubService() {}
 
-//        public async Task<object> SendRequestToFinnhub(string route, HttpMethod httpMethod, CancellationToken cancellationToken)
-//        {
-//            var routeWithToken = route.Replace("{token}", token);
+        public async Task<T> SendRequestToFinnhub<T>(string route, HttpMethod httpMethod, CancellationToken cancellationToken)
+        {
+            using var client = new HttpClient();
 
-//            var message = new HttpRequestMessage(httpMethod, routeWithToken);
+            var routeWithToken = route.Replace("{token}", token);
 
-//            var response = await client.SendAsync(message, cancellationToken);
+            var message = new HttpRequestMessage(HttpMethod.Get, routeWithToken);
 
-//            return response.Content;
-//        }
-//    }
-//}
+            var response = await client.SendAsync(message, cancellationToken);
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<T>(content);
+        }
+    }
+}

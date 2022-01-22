@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-
+using StockData.Services.FinnhubService;
 
 namespace StockData
 {
@@ -25,6 +25,8 @@ namespace StockData
             services.AddCors();
             //services.AddHttpClient<Service>();
             services.AddMediatR(typeof(Startup));
+
+            services.AddScoped<IFinnhubService, FinnhubService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
