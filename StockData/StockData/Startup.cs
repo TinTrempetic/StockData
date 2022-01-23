@@ -24,6 +24,8 @@ namespace StockData
             services.AddCors();
             services.AddMediatR(typeof(Startup));
 
+            services.AddDbContext<StockDataContext>();
+
             services.AddScoped<IFinnhubService, FinnhubService>();
         }
 
