@@ -1,9 +1,10 @@
-﻿using StockData.Enums;
+﻿using MediatR;
+using StockData.Enums;
 using System;
 
 namespace StockData.Command.Portfolio.AddAssetToPortfolio
 {
-    public class AddAssetToPortfolioCommand
+    public class AddAssetToPortfolioCommand : IRequest<AddAssetToPortfolioCommandResponse>
     {
         public string Symbol { get; set; }
         public AssetType AssetType { get; set; }

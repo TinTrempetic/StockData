@@ -1,6 +1,8 @@
-﻿namespace StockData.Command.Watchlist.RemoveAssetFromWatchlist
+﻿using MediatR;
+
+namespace StockData.Command.Watchlist.RemoveAssetFromWatchlist
 {
-    public class RemoveAssetFromWatchlistCommand
+    public class RemoveAssetFromWatchlistCommand : IRequest<RemoveAssetFromWatchlistCommandResponse>
     {
         public int Id { get; set; }
     }

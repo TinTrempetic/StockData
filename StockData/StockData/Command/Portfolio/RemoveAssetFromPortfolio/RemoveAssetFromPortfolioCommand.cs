@@ -1,6 +1,8 @@
-﻿namespace StockData.Command.Portfolio.RemoveAssetFromPortfolio
+﻿using MediatR;
+
+namespace StockData.Command.Portfolio.RemoveAssetFromPortfolio
 {
-    public class RemoveAssetFromPortfolioCommand
+    public class RemoveAssetFromPortfolioCommand : IRequest<RemoveAssetFromPortfolioCommandResponse>
     {
         public int Id { get; set; }
     }
