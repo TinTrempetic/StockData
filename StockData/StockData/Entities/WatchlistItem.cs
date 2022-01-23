@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StockData.Entities
 {
-    public class Watchlist
+    public class WatchlistItem
     {
         [Key]
         public int Id { get; private set; }
@@ -20,5 +20,12 @@ namespace StockData.Entities
         /// Type of the asset (Stock/Crypto)
         /// </summary>
         public AssetType AssetType { get; private set; }
+
+        public WatchlistItem(Guid userId, string symbol, AssetType assetType)
+        {
+            UserId = userId;
+            Symbol = symbol;
+            AssetType = assetType;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StockData.Entities
 {
-    public class Portfolio
+    public class PortfolioItem
     {
         [Key]
         public int Id {  get; private set; }
@@ -32,5 +32,15 @@ namespace StockData.Entities
         /// Buying price of the asset
         /// </summary>
         public float Price { get; private set; }
+
+        public PortfolioItem(Guid userId, string symbol, AssetType assetType, DateTime dateBought, float quantity, float price)
+        { 
+            UserId = userId;
+            Symbol = symbol;
+            AssetType = assetType;
+            DateBought = dateBought;
+            Quantity = quantity;
+            Price = price;
+        }
     }
 }

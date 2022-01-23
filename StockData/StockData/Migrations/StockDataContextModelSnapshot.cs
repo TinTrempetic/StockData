@@ -19,7 +19,7 @@ namespace StockData.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("StockData.Entities.Portfolio", b =>
+            modelBuilder.Entity("StockData.Entities.PortfolioItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,10 +46,10 @@ namespace StockData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Portfolios");
+                    b.ToTable("PortfolioItems");
                 });
 
-            modelBuilder.Entity("StockData.Entities.Watchlist", b =>
+            modelBuilder.Entity("StockData.Entities.WatchlistItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace StockData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Watchlists");
+                    b.ToTable("WatchlistItems");
                 });
 #pragma warning restore 612, 618
         }

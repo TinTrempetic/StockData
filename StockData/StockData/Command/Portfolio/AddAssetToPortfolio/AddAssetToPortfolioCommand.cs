@@ -4,7 +4,7 @@ using System;
 
 namespace StockData.Command.Portfolio.AddAssetToPortfolio
 {
-    public class AddAssetToPortfolioCommand : IRequest<AddAssetToPortfolioCommandResponse>
+    public class AddAssetToPortfolioCommand : IRequest<int>
     {
         public string Symbol { get; set; }
         public AssetType AssetType { get; set; }

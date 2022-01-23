@@ -21,7 +21,7 @@ namespace StockData.Query.GetPortfolio
 
         public async Task<List<GetPortfolioQueryResponse>> Handle(GetPortfolioQuery request, CancellationToken cancellationToken)
         {
-            var portfolio = await context.Portfolios
+            var portfolio = await context.PortfolioItems
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .Select(x => new GetPortfolioQueryResponse

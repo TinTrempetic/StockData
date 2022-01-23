@@ -21,7 +21,7 @@ namespace StockData.Query.GetWatchlist
 
         public async Task<List<GetWatchlistQueryResponse>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
         {
-            var watchlist = await context.Watchlists
+            var watchlist = await context.WatchlistItems
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .Select(x => new GetWatchlistQueryResponse

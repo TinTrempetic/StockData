@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StockData.Command.Portfolio.AddAssetToPortfolio
 {
-    public class AddAssetToPortfolioCommandHandler : IRequestHandler<AddAssetToPortfolioCommand, AddAssetToPortfolioCommandResponse>
+    public class AddAssetToPortfolioCommandHandler : IRequestHandler<AddAssetToPortfolioCommand, int>
     {
         // TODO: Replace with IdentityUser
         Guid userId = Guid.Empty;
@@ -15,9 +15,15 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
             this.context = context;
         }
 
-        public Task<AddAssetToPortfolioCommandResponse> Handle(AddAssetToPortfolioCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddAssetToPortfolioCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var newPortfolioItem = new Entities.PortfolioItem(userId, request.Symbol, request.AssetType, request.DateBought, request.Quantity, request.Price);
+
+            context.Add(newPortfolioItem);
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return newPortfolioItem.Id;
         } 
     }
 }
