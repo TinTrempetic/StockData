@@ -42,5 +42,16 @@ namespace StockData.Entities
             Quantity = quantity;
             Price = price;
         }
+
+        public void UpdateProtfolioItem(int id, Guid userId, string symbol, AssetType assetType, DateTime dateBought, float quantity, float price)
+        {
+            Id = id;
+            UserId = userId;
+            Symbol = symbol;
+            AssetType = assetType;
+            DateBought = dateBought;
+            Quantity = quantity;
+            Price = price;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,9 +16,23 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
             this.context = context;
         }
 
-        public Task<UpdatePortfolioAssetCommandResponse> Handle(UpdatePortfolioAssetCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatePortfolioAssetCommandResponse> Handle(UpdatePortfolioAssetCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var portfolioItem = await context.PortfolioItems.FirstOrDefaultAsync(p => p.Id == request.Id);
+
+            portfolioItem.UpdateProtfolioItem(request.Id, userId, request.Symbol, request.AssetType, request.DateBought, request.Quantity, request.Price);
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return new UpdatePortfolioAssetCommandResponse
+            {
+                Id = request.Id,
+                Symbol = request.Symbol,
+                AssetType = request.AssetType,
+                DateBought = request.DateBought,
+                Quantity = request.Quantity,
+                Price = request.Price
+            };
         }
     }
 }

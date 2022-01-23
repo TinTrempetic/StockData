@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StockData.Command.Portfolio.RemoveAssetFromPortfolio
 {
-    public class RemoveAssetFromPortfolioCommandHandler : IRequestHandler<RemoveAssetFromPortfolioCommand, RemoveAssetFromPortfolioCommandResponse>
+    public class RemoveAssetFromPortfolioCommandHandler : IRequestHandler<RemoveAssetFromPortfolioCommand, int>
     {
         // TODO: Replace with IdentityUser
         Guid userId = Guid.Empty;
@@ -15,9 +16,15 @@ namespace StockData.Command.Portfolio.RemoveAssetFromPortfolio
             this.context = context;
         }
 
-        public Task<RemoveAssetFromPortfolioCommandResponse> Handle(RemoveAssetFromPortfolioCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(RemoveAssetFromPortfolioCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var portfolioItemToRemove = await context.PortfolioItems.FirstOrDefaultAsync(p => p.Id == request.Id);
+
+            context.PortfolioItems.Remove(portfolioItemToRemove);
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return request.Id;
         } 
     }
 }
