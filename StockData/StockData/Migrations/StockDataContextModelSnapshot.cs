@@ -3,6 +3,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using StockData;
 
 namespace StockData.Migrations
 {
@@ -17,7 +19,7 @@ namespace StockData.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("StockData.Domain.Portfolio", b =>
+            modelBuilder.Entity("StockData.Entities.Portfolio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +46,7 @@ namespace StockData.Migrations
                     b.ToTable("Portfolios");
                 });
 
-            modelBuilder.Entity("StockData.Domain.Watchlist", b =>
+            modelBuilder.Entity("StockData.Entities.Watchlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +64,7 @@ namespace StockData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Watchlists");
                 });
 #pragma warning restore 612, 618
         }
