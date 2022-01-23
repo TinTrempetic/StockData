@@ -24,7 +24,7 @@ namespace StockData.Services.FinnhubService
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
             return JsonConvert.DeserializeObject<T>(content);
         }

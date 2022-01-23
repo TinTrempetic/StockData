@@ -19,8 +19,6 @@ namespace StockData.Query.GetPortfolio
             this.context = context;
         }
 
-        public StockDataContext Context { get; }
-
         public async Task<List<GetPortfolioQueryResponse>> Handle(GetPortfolioQuery request, CancellationToken cancellationToken)
         {
             var portfolio = await context.Portfolios

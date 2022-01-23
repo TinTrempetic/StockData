@@ -19,8 +19,6 @@ namespace StockData.Query.GetWatchlist
             this.context = context;
         }
 
-        public StockDataContext Context { get; }
-
         public async Task<List<GetWatchlistQueryResponse>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
         {
             var watchlist = await context.Watchlists
