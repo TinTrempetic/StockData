@@ -23,7 +23,7 @@ namespace StockData.Query.GetWatchlist
 
         public async Task<List<GetWatchlistQueryResponse>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
         {
-            return await context.Watchlists
+            var watchlist = await context.Watchlists
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .Select(x => new GetWatchlistQueryResponse
@@ -33,6 +33,10 @@ namespace StockData.Query.GetWatchlist
                     AssetType = x.AssetType
                 })
                 .ToListAsync(cancellationToken);
+
+            // TODO: Get current asset information from the finhub API
+
+            return watchlist;
         }
     }
 }

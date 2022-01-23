@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Command\Portfolio\AddAssetToPortfolio\" />
-    <Folder Include="Command\Portfolio\RemoveAssetFromPortfolio\" />
-    <Folder Include="Command\Watchlist\AddAssetToWatchlist\" />
-    <Folder Include="Command\Watchlist\RemoveAssetFromWatchlist\" />
     <Folder Include="Utility\" />
   </ItemGroup>
 

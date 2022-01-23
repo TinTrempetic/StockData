@@ -23,7 +23,7 @@ namespace StockData.Query.GetPortfolio
 
         public async Task<List<GetPortfolioQueryResponse>> Handle(GetPortfolioQuery request, CancellationToken cancellationToken)
         {
-            return await context.Portfolios
+            var portfolio = await context.Portfolios
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .Select(x => new GetPortfolioQueryResponse
@@ -36,6 +36,10 @@ namespace StockData.Query.GetPortfolio
                     Price = x.Price
                 })
                 .ToListAsync(cancellationToken);
+
+            // TODO: Get current asset information from the finhub API
+
+            return portfolio;
         }
     }
 }

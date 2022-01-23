@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StockData.Query.GetPortfolio;
 using StockData.Query.GetStockQuote;
-using StockData.Query.GetWatchlist;
 using System.Threading.Tasks;
 
 namespace StockData.Controllers
@@ -22,18 +20,6 @@ namespace StockData.Controllers
         public async Task<IActionResult> GetStockQuote([FromQuery] string symbol)
         {
             return Ok(await mediator.Send(new GetStockQuoteQuery { Symbol = symbol }));
-        }
-
-        [HttpGet("portfolio")]
-        public async Task<IActionResult> GetPortfolio()
-        {
-            return Ok(await mediator.Send(new GetPortfolioQuery()));
-        }
-
-        [HttpGet("watchlist")]
-        public async Task<IActionResult> GetWatchlist()
-        {
-            return Ok(await mediator.Send(new GetWatchlistQuery()));
         }
     }
 }
