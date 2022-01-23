@@ -27,5 +27,13 @@ namespace StockData.Entities
             Symbol = symbol;
             AssetType = assetType;
         }
+
+        public void Update(int id, Guid userId, string symbol, AssetType assetType)
+        {
+            Id = id;
+            UserId = userId;
+            Symbol = symbol;
+            AssetType = assetType;
+        }
     }
 }

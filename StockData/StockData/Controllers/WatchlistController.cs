@@ -25,13 +25,13 @@ namespace StockData.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAssetToPortfolio([FromBody] AddAssetToWatchlistCommand command)
+        public async Task<IActionResult> AddAssetToWatchlist([FromBody] AddAssetToWatchlistCommand command)
         {
             return Ok(await mediator.Send(command));
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveAssetFromPortfolio([FromBody] RemoveAssetFromWatchlistCommand command)
+        public async Task<IActionResult> RemoveAssetFromWatchlist([FromBody] RemoveAssetFromWatchlistCommand command)
         {
             return Ok(await mediator.Send(command));
         }

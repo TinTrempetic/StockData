@@ -2,7 +2,7 @@
 
 namespace StockData.Command.Watchlist.RemoveAssetFromWatchlist
 {
-    public class RemoveAssetFromWatchlistCommand : IRequest<RemoveAssetFromWatchlistCommandResponse>
+    public class RemoveAssetFromWatchlistCommand : IRequest<int>
     {
         public int Id { get; set; }
     }

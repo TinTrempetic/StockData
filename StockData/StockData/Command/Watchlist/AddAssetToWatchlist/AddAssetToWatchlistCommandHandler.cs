@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StockData.Command.Watchlist.AddAssetToWatchlist
 {
-    public class AddAssetToWatchlistCommandHandler : IRequestHandler<AddAssetToWatchlistCommand, AddAssetToWatchlistCommandResponse>
+    public class AddAssetToWatchlistCommandHandler : IRequestHandler<AddAssetToWatchlistCommand, int>
     {
         // TODO: Replace with IdentityUser
         Guid userId = Guid.Empty;
@@ -15,9 +15,15 @@ namespace StockData.Command.Watchlist.AddAssetToWatchlist
             this.context = context;
         }
 
-        public Task<AddAssetToWatchlistCommandResponse> Handle(AddAssetToWatchlistCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddAssetToWatchlistCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var newWatchlistItem = new Entities.WatchlistItem(userId, request.Symbol, request.AssetType);
+
+            context.Add(newWatchlistItem);
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return newWatchlistItem.Id;
         }
     }
 }
