@@ -28,7 +28,6 @@ namespace StockData.Query.GetPortfolio
                 {
                     Id = x.Id,
                     Symbol = x.Symbol,
-                    AssetType = x.AssetType,
                     DateBought = x.DateBought,
                     Quantity = x.Quantity,
                     Price = x.Price

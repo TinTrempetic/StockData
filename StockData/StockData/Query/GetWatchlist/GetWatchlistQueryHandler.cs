@@ -27,8 +27,7 @@ namespace StockData.Query.GetWatchlist
                 .Select(x => new GetWatchlistQueryResponse
                 {
                     Id = x.Id,
-                    Symbol = x.Symbol,
-                    AssetType = x.AssetType
+                    Symbol = x.Symbol
                 })
                 .ToListAsync(cancellationToken);
 

@@ -6,6 +6,5 @@ namespace StockData.Command.Watchlist.AddAssetToWatchlist
     public class AddAssetToWatchlistCommand : IRequest<int>
     {
         public string Symbol { get; set; }
-        public AssetType AssetType { get; set; }
     }
 }

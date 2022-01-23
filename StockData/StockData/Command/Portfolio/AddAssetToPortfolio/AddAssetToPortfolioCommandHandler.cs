@@ -17,7 +17,7 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
 
         public async Task<int> Handle(AddAssetToPortfolioCommand request, CancellationToken cancellationToken)
         {
-            var newPortfolioItem = new Entities.PortfolioItem(userId, request.Symbol, request.AssetType, request.DateBought, request.Quantity, request.Price);
+            var newPortfolioItem = new Entities.PortfolioItem(userId, request.Symbol, request.DateBought, request.Quantity, request.Price);
 
             context.Add(newPortfolioItem);
 

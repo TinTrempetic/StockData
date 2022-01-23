@@ -17,7 +17,7 @@ namespace StockData.Command.Watchlist.AddAssetToWatchlist
 
         public async Task<int> Handle(AddAssetToWatchlistCommand request, CancellationToken cancellationToken)
         {
-            var newWatchlistItem = new Entities.WatchlistItem(userId, request.Symbol, request.AssetType);
+            var newWatchlistItem = new Entities.WatchlistItem(userId, request.Symbol);
 
             context.Add(newWatchlistItem);
 

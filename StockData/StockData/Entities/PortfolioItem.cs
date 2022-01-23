@@ -17,10 +17,6 @@ namespace StockData.Entities
         /// </summary>
         public string Symbol { get; private set; }
         /// <summary>
-        /// Type of the asset (Stock/Crypto)
-        /// </summary>
-        public AssetType AssetType { get;private set; }
-        /// <summary>
         /// Date when the asset has been bought
         /// </summary>
         public DateTime DateBought { get; private set; }
@@ -33,22 +29,20 @@ namespace StockData.Entities
         /// </summary>
         public float Price { get; private set; }
 
-        public PortfolioItem(Guid userId, string symbol, AssetType assetType, DateTime dateBought, float quantity, float price)
+        public PortfolioItem(Guid userId, string symbol, DateTime dateBought, float quantity, float price)
         { 
             UserId = userId;
             Symbol = symbol;
-            AssetType = assetType;
             DateBought = dateBought;
             Quantity = quantity;
             Price = price;
         }
 
-        public void Update(int id, Guid userId, string symbol, AssetType assetType, DateTime dateBought, float quantity, float price)
+        public void Update(int id, Guid userId, string symbol, DateTime dateBought, float quantity, float price)
         {
             Id = id;
             UserId = userId;
             Symbol = symbol;
-            AssetType = assetType;
             DateBought = dateBought;
             Quantity = quantity;
             Price = price;

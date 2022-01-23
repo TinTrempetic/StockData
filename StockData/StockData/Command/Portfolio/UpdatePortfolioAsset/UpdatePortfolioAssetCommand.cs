@@ -8,7 +8,6 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
     {
         public int Id {  get; set; }
         public string Symbol { get; set; }
-        public AssetType AssetType { get; set; }
         public DateTime DateBought { get; set; }
         public float Quantity { get; set; }
         public float Price { get; set; }

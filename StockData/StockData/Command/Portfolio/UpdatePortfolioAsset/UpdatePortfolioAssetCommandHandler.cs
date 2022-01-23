@@ -20,7 +20,7 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
         {
             var portfolioItem = await context.PortfolioItems.FirstOrDefaultAsync(p => p.Id == request.Id);
 
-            portfolioItem.Update(request.Id, userId, request.Symbol, request.AssetType, request.DateBought, request.Quantity, request.Price);
+            portfolioItem.Update(request.Id, userId, request.Symbol, request.DateBought, request.Quantity, request.Price);
 
             await context.SaveChangesAsync(cancellationToken);
 
@@ -28,7 +28,6 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
             {
                 Id = request.Id,
                 Symbol = request.Symbol,
-                AssetType = request.AssetType,
                 DateBought = request.DateBought,
                 Quantity = request.Quantity,
                 Price = request.Price

@@ -16,24 +16,18 @@ namespace StockData.Entities
         /// Asset Symbol
         /// </summary>
         public string Symbol { get; private set; }
-        /// <summary>
-        /// Type of the asset (Stock/Crypto)
-        /// </summary>
-        public AssetType AssetType { get; private set; }
 
-        public WatchlistItem(Guid userId, string symbol, AssetType assetType)
+        public WatchlistItem(Guid userId, string symbol)
         {
             UserId = userId;
             Symbol = symbol;
-            AssetType = assetType;
         }
 
-        public void Update(int id, Guid userId, string symbol, AssetType assetType)
+        public void Update(int id, Guid userId, string symbol)
         {
             Id = id;
             UserId = userId;
             Symbol = symbol;
-            AssetType = assetType;
         }
     }
 }
