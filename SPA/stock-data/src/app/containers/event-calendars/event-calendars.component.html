@@ -1,26 +1,34 @@
 <div class="events">
-  <div class="filters">
-    <div class="event-type">
-      <p-dropdown
-        id="eventType"
-        [options]="eventTypes"
-        [autoDisplayFirst]="false"
-        placeholder="Event"
-      ></p-dropdown>
-    </div>
+  <form [formGroup]="form">
+    <div class="filters">
+      <div class="event-type">
+        <p-dropdown
+          id="eventType"
+          [options]="eventTypes"
+          [autoDisplayFirst]="false"
+          placeholder="Event"
+          formControlName="event"
+        ></p-dropdown>
+      </div>
 
-    <div class="event-calendar">
-      <span class="p-float-label">
-        <p-calendar id="fromDate"></p-calendar>
-        <label for="fromDate">Date From</label>
-      </span>
-    </div>
+      <div class="event-calendar">
+        <span class="p-float-label">
+          <p-calendar id="fromDate" formControlName="fromDate"></p-calendar>
+          <label for="fromDate">Date From</label>
+        </span>
+      </div>
 
-    <div class="event-calendar">
-      <span class="p-float-label">
-        <p-calendar id="toDate"></p-calendar>
-        <label for="toDate">Date To</label>
-      </span>
+      <div class="event-calendar">
+        <span class="p-float-label">
+          <p-calendar id="toDate" formControlName="toDate"></p-calendar>
+          <label for="toDate">Date To</label>
+        </span>
+      </div>
     </div>
-  </div>
+    <ng-container *ngIf="form.errors?.['customMessage']">
+      <div class="custom-message">
+        {{form.errors?.['customMessage']}}
+      </div>
+    </ng-container>
+  </form>
 </div>

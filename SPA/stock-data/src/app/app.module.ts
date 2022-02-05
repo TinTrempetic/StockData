@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,8 +53,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ScrollPanelModule,
     DropdownModule,
     CalendarModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent],
-  providers: [],
+  providers: [DatePipe],
 })
 export class AppModule {}

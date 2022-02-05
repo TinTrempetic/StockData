@@ -13,6 +13,7 @@ import {
   StockLookupSelectItem,
 } from 'src/app/types';
 import { EventType } from 'src/app/enums';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class FinnhubService {
   // TODO: get this from database
   private apiKey = 'c7bfc4qad3ia366ft1k0';
 
-  constructor(private http: HttpClient) {}
+  // TODO: move datePipe to utilities
+  constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
   public stockLookup(symbol: string): Observable<StockLookupSelectItem[]> {
     const route = endpoints.symbolLookup
@@ -70,8 +72,8 @@ export class FinnhubService {
     fromDate: Date,
     toDate: Date
   ): Observable<Earnings[] | Ipo[]> {
-    const from = fromDate?.toDateString();
-    const to = toDate.toDateString();
+    const from = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
+    const to = this.datePipe.transform(toDate, 'yyyy-MM-dd');
 
     const params = `from=${from}&to=${to}`;
 
