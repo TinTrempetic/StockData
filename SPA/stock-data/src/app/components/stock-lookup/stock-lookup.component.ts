@@ -14,6 +14,7 @@ import { StockLookupSelectItem } from 'src/app/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockLookupComponent {
+  private _clearLabelOnFocus: boolean;
   lookupText: string;
 
   @Input() suggestions: StockLookupSelectItem[];
@@ -26,7 +27,14 @@ export class StockLookupComponent {
   }
 
   public suggestionSelected(event: any): void {
-    this.lookupText = null;
+    this._clearLabelOnFocus = true;
     this.stockSelected.emit(event);
+  }
+
+  public clearLabel(): void {
+    if (!this._clearLabelOnFocus) return;
+
+    this._clearLabelOnFocus = false;
+    this.lookupText = undefined;
   }
 }

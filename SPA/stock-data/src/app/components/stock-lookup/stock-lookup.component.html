@@ -1,13 +1,17 @@
 <p-autoComplete
   [(ngModel)]="lookupText"
-  [showEmptyMessage]="true"
-  [suggestions]="suggestions"
-  (completeMethod)="getFilteredStocks($event.query)"
-  (onSelect)="suggestionSelected($event)"
-  [minLength]="1"
-  [multiple]="false"
   styleClass="full-width"
   inputStyleClass="full-width"
+  placeholder="Search for a stock symbol"
+  emptyMessage="No stocks found"
+  [delay]="500"
+  [showEmptyMessage]="true"
+  [suggestions]="suggestions"
+  [minLength]="1"
+  [multiple]="false"
+  (onSelect)="suggestionSelected($event)"
+  (onFocus)="clearLabel()"
+  (completeMethod)="getFilteredStocks($event.query)"
 >
   <ng-template let-item pTemplate="item">
     {{ item.label }} ({{ item.symbol }})
