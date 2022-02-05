@@ -3,11 +3,16 @@ import { endpoints } from './finnhub.endpoints';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import {
+  Earnings,
+  EarningsCalendarResponse,
+  Ipo,
+  IpoCalendarResponse,
   MarketNews,
   MarketNewsResponse,
   StockLookupResponse,
   StockLookupSelectItem,
 } from 'src/app/types';
+import { EventType } from 'src/app/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -58,5 +63,43 @@ export class FinnhubService {
         });
       })
     );
+  }
+
+  public getCalendarEvents(
+    eventType: string,
+    fromDate: Date,
+    toDate: Date
+  ): Observable<Earnings[] | Ipo[]> {
+    const from = fromDate?.toDateString();
+    const to = toDate.toDateString();
+
+    const params = `from=${from}&to=${to}`;
+
+    const route = endpoints.calendarEvents
+      .replace('{eventType}', eventType)
+      .replace('{params}', params)
+      .replace('{token}', this.apiKey);
+
+    switch (eventType) {
+      case EventType.ipo: {
+        return this.getIpoCalendar(route);
+      }
+      default:
+      case EventType.earnings: {
+        return this.getEarningsCalendar(route);
+      }
+    }
+  }
+
+  private getIpoCalendar(route: string): Observable<Ipo[]> {
+    return this.http
+      .get<IpoCalendarResponse>(route)
+      .pipe(map((result) => result.ipoCalendar));
+  }
+
+  private getEarningsCalendar(route: string): Observable<Earnings[]> {
+    return this.http
+      .get<EarningsCalendarResponse>(route)
+      .pipe(map((result) => result.earningsCalendar));
   }
 }

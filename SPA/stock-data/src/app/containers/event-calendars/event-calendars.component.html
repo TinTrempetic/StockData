@@ -1,1 +1,26 @@
-<p>event-calendars works!</p>
+<div class="events">
+  <div class="filters">
+    <div class="event-type">
+      <p-dropdown
+        id="eventType"
+        [options]="eventTypes"
+        [autoDisplayFirst]="false"
+        placeholder="Event"
+      ></p-dropdown>
+    </div>
+
+    <div class="event-calendar">
+      <span class="p-float-label">
+        <p-calendar id="fromDate"></p-calendar>
+        <label for="fromDate">Date From</label>
+      </span>
+    </div>
+
+    <div class="event-calendar">
+      <span class="p-float-label">
+        <p-calendar id="toDate"></p-calendar>
+        <label for="toDate">Date To</label>
+      </span>
+    </div>
+  </div>
+</div>
