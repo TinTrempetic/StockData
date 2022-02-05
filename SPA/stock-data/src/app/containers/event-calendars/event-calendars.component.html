@@ -30,5 +30,14 @@
         {{form.errors?.['customMessage']}}
       </div>
     </ng-container>
+
+    <ng-container *ngIf="form.valid">
+      <ng-container *ngIf="eventTypeFormValue === 'ipo'">
+        {{ ipoData$ | async | json }}
+      </ng-container>
+      <ng-container *ngIf="eventTypeFormValue === 'earnings'">
+        {{ earningsData$ | async | json }}
+      </ng-container>
+    </ng-container>
   </form>
 </div>

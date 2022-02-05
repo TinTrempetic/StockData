@@ -7,9 +7,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { filter, take, tap } from 'rxjs';
+import { filter, Subject, take, tap } from 'rxjs';
 import { EventType } from 'src/app/enums';
 import { FinnhubService } from 'src/app/services';
+import { Earnings, Ipo } from 'src/app/types';
 
 @Component({
   selector: 'event-calendars',
@@ -18,12 +19,22 @@ import { FinnhubService } from 'src/app/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventCalendarsComponent implements OnInit {
+  private _earnings = new Subject<Earnings[]>();
+  earningsData$ = this._earnings.asObservable();
+
+  private _ipo = new Subject<Ipo[]>();
+  ipoData$ = this._ipo.asObservable();
+
   form: FormGroup;
 
   eventTypes = [
     { value: EventType.ipo, label: 'IPO' },
     { value: EventType.earnings, label: 'Earnings' },
   ];
+
+  get eventTypeFormValue(): string {
+    return this.form.get('event')?.value;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -60,10 +71,16 @@ export class EventCalendarsComponent implements OnInit {
     this.finnhubService
       .getCalendarEvents(event, fromDate, toDate)
       .pipe(
-        tap((x) => console.log(x)),
+        tap((data) => this.assignDataToTheObserver(data)),
         take(1)
       )
       .subscribe();
+  }
+
+  private assignDataToTheObserver(data: any): void {
+    if (this.eventTypeFormValue === EventType.ipo) this._ipo.next(data);
+    if (this.eventTypeFormValue === EventType.earnings)
+      this._earnings.next(data);
   }
 
   private checkIfDatesAreInRangeValidator(control: AbstractControl): {
