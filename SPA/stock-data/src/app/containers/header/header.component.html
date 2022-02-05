@@ -1,7 +1,11 @@
 <div class="header">
-  <stock-lookup
-    [suggestions]="suggestions$ | async"
-    (stockLookupChanged)="getStockSuggestions($event)"
-    (stockSelected)="stockSelected($event)"
-  ></stock-lookup>
+  <div class="lookup">
+    <stock-lookup
+      [suggestions]="suggestions$ | async"
+      (stockLookupChanged)="getStockSuggestions($event)"
+      (stockSelected)="stockSelected($event)"
+    ></stock-lookup>
+  </div>
+
+  <div class="user"><i class="pi pi-user user-icon"></i></div>
 </div>

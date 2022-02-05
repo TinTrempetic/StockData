@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { StockLookupSelectItem } from 'src/app/types';
 
 @Component({
   selector: 'stock-lookup',
@@ -14,9 +14,9 @@ import { SelectItem } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockLookupComponent {
-  @Input() set suggestions(input: any) {
-    console.log(input);
-  }
+  lookupText: string;
+
+  @Input() suggestions: StockLookupSelectItem[];
 
   @Output() stockLookupChanged = new EventEmitter<string>();
   @Output() stockSelected = new EventEmitter<any>();
@@ -26,7 +26,7 @@ export class StockLookupComponent {
   }
 
   public suggestionSelected(event: any): void {
-    console.log(event);
-    // this.stockSelected.emit(event);
+    this.lookupText = null;
+    this.stockSelected.emit(event);
   }
 }

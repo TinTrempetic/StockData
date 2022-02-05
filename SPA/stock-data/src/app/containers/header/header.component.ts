@@ -10,30 +10,17 @@ import { StockLookupSelectItem } from 'src/app/types';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   private _suggestions = new Subject<any>();
   suggestions$ = this._suggestions.asObservable();
 
-  private _stockLookupObserver = new Subject<string>();
-  stockLookupObserver$ = this._stockLookupObserver.asObservable();
-
   constructor(private finnhubService: FinnhubService) {}
 
-  ngOnInit(): void {
-    this.stockLookupObserver$
-      .pipe(
-        filter((x) => !!x),
-        tap((symbol) => {
-          this.finnhubService
-            .stockLookup(symbol)
-            .pipe(tap((result) => this.updateSuggestions(result)));
-        })
-      )
-      .subscribe();
-  }
-
   public getStockSuggestions(symbol: any): void {
-    this._stockLookupObserver.next(symbol);
+    this.finnhubService
+      .stockLookup(symbol)
+      .pipe(tap((result) => this.updateSuggestions(result)))
+      .subscribe();
   }
 
   public stockSelected(event: any): void {

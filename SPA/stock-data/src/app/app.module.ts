@@ -18,6 +18,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AutoCompleteModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
   bootstrap: [AppComponent],
   providers: [],

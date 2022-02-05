@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { endpoints } from './finnhub.endpoints';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, switchMap } from 'rxjs';
-import {
-  StockLookupResponse,
-  StockLookupResponseResult,
-  StockLookupSelectItem,
-} from 'src/app/types';
-import { SelectItem } from 'primeng/api';
-import { resourceLimits } from 'worker_threads';
+import { map, Observable } from 'rxjs';
+import { StockLookupResponse, StockLookupSelectItem } from 'src/app/types';
 
 @Injectable({
   providedIn: 'root',
