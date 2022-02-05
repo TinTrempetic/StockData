@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { endpoints } from './finnhub.endpoints';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { StockLookupResponse, StockLookupSelectItem } from 'src/app/types';
+import {
+  MarketNews,
+  MarketNewsResponse,
+  StockLookupResponse,
+  StockLookupSelectItem,
+} from 'src/app/types';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +34,27 @@ export class FinnhubService {
             label: result.description,
             symbol: result.symbol,
           } as StockLookupSelectItem;
+        });
+      })
+    );
+  }
+
+  public getMarketNews(): Observable<MarketNews[]> {
+    const route = endpoints.marketNews
+      .replace('{category}', 'general')
+      .replace('{token}', this.apiKey);
+
+    const response = this.http.get<MarketNewsResponse[]>(route);
+
+    return response.pipe(
+      map((response: MarketNewsResponse[]) => {
+        return response.map((item) => {
+          const dateTime = new Date(item.datetime * 1000);
+
+          return {
+            ...item,
+            dateTime,
+          } as MarketNews;
         });
       })
     );

@@ -13,12 +13,14 @@ import { MarketNewsComponent } from './containers/market-news/market-news.compon
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { EventCalendarsComponent } from './containers/event-calendars/event-calendars.component';
 import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
+import { MarketNewsItemComponent } from './components/market-news-item/market-news-item.component';
 
 import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     CalendarComponent,
     EventCalendarsComponent,
     StockLookupComponent,
+    MarketNewsItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ScrollPanelModule,
   ],
   bootstrap: [AppComponent],
   providers: [],

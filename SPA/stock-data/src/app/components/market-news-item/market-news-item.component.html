@@ -1,0 +1,17 @@
+<div class="item">
+  <img [src]="item.image" class="image" />
+
+  <div class="item-text">
+    <div class="headline">
+      <a [href]="item.url" target="_blank">
+        <strong>
+          {{ item.dateTime | date: "MM/dd/yyyy HH:mm:ss" }} {{ item.headline }}
+        </strong>
+      </a>
+    </div>
+
+    <div class="summary">
+      {{ item.summary }}
+    </div>
+  </div>
+</div>
