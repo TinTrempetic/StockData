@@ -1,5 +1,4 @@
 <p-autoComplete
-  class="autocomplete"
   [(ngModel)]="lookupText"
   [showEmptyMessage]="true"
   [suggestions]="suggestions"
@@ -7,6 +6,8 @@
   (onSelect)="suggestionSelected($event)"
   [minLength]="1"
   [multiple]="false"
+  styleClass="full-width"
+  inputStyleClass="full-width"
 >
   <ng-template let-item pTemplate="item">
     {{ item.label }} ({{ item.symbol }})
