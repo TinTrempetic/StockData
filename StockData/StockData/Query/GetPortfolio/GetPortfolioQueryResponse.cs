@@ -8,6 +8,7 @@ namespace StockData.Query.GetPortfolio
         public string Symbol { get; set; }
         public DateTime DateBought { get; set; }
         public float Quantity { get; set; }
-        public float Price { get; set; }
+        public float AveragePrice { get; set; }
+        public float CurrentPrice { get; set; }
     }
 }

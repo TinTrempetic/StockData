@@ -1,0 +1,7 @@
+<p-autoComplete
+  [showEmptyMessage]="true"
+  [suggestions]="suggestions"
+  (completeMethod)="getFilteredStocks($event.query)"
+  (onSelect)="suggestionSelected($event)"
+  [minLength]="1"
+></p-autoComplete>

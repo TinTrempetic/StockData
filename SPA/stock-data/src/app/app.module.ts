@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,9 +12,12 @@ import { StockWatchlistComponent } from './containers/stock-watchlist/stock-watc
 import { MarketNewsComponent } from './containers/market-news/market-news.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { EventCalendarsComponent } from './containers/event-calendars/event-calendars.component';
+import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
 
-import {TabViewModule} from 'primeng/tabview';
-import {TableModule} from 'primeng/table'
+import { TabViewModule } from 'primeng/tabview';
+import { TableModule } from 'primeng/table';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,15 +29,19 @@ import {TableModule} from 'primeng/table'
     StockWatchlistComponent,
     MarketNewsComponent,
     CalendarComponent,
-    EventCalendarsComponent
+    EventCalendarsComponent,
+    StockLookupComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     TabViewModule,
-    TableModule
+    TableModule,
+    AutoCompleteModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
+  bootstrap: [AppComponent],
   providers: [],
-  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
