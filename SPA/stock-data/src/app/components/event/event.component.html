@@ -1,0 +1,39 @@
+<p-accordion>
+  <ng-container *ngIf="ipo">
+    <p-accordionTab [header]="ipo.name ?? ipo.symbol">
+      <p><strong>Name: </strong>{{ ipo.name }}</p>
+      <p><strong>Symbol: </strong>{{ ipo.symbol ?? "Unknown" }}</p>
+      <p><strong>Exchange: </strong>{{ ipo.exchange ?? "Unknown" }}</p>
+      <p>
+        <strong>Number of shares: </strong>{{ ipo.numberOfShares ?? "Unknown" }}
+      </p>
+      <p><strong>Price: </strong>{{ ipo.price ?? "Unknown" }}</p>
+      <p>
+        <strong>Total shares value: </strong
+        >{{ ipo.totalSharesValue ?? "Unknown" }}
+      </p>
+    </p-accordionTab>
+  </ng-container>
+
+  <ng-container *ngIf="earning">
+    <p-accordionTab [header]="earning.symbol">
+      <p><strong>Year:</strong> {{ earning.year ?? "Unknown" }}</p>
+      <p><strong>Quarter: </strong>{{ earning.quarter ?? "Unknown" }}</p>
+      <ng-container *ngIf="earning.epsActual">
+        <p><strong>Earnings per share: </strong>{{ earning.epsActual }}</p>
+      </ng-container>
+      <p>
+        <strong>Estimated earnings per share: </strong
+        >{{ earning.epsEstimate ?? "Unknown" }}
+      </p>
+      <p><strong>Revenue: </strong>{{ earning.revenueActual ?? "Unknown" }}</p>
+      <p>
+        <strong>Estimated revenue: </strong
+        >{{ earning.revenueEstimate ?? "Unknown" }}
+      </p>
+      <p>
+        <strong>Time: </strong>{{ getEarningsTime(earning.hour) ?? "Unknown" }}
+      </p>
+    </p-accordionTab>
+  </ng-container>
+</p-accordion>

@@ -1,0 +1,49 @@
+<div class="events">
+  <form [formGroup]="form">
+    <div class="filters">
+      <div class="event-type">
+        <p-dropdown
+          id="eventType"
+          [options]="eventTypes"
+          [autoDisplayFirst]="false"
+          placeholder="Event"
+          formControlName="event"
+          (onChange)="dropdownValueChanged()"
+        ></p-dropdown>
+      </div>
+
+      <div class="event-calendar">
+        <span class="p-float-label">
+          <p-calendar
+            id="date"
+            formControlName="date"
+            [minDate]="
+              eventTypeFormValue === 'ipo' ? ipoMinDate : earningsMinDate
+            "
+            [maxDate]="
+              eventTypeFormValue === 'ipo' ? ipoMaxDate : earningsMaxDate
+            "
+          ></p-calendar>
+          <label for="date">Date </label>
+        </span>
+      </div>
+    </div>
+
+    <div class="events-list">
+      <p-scrollPanel [style]="{ width: '100%', height: 'calc(100vh - 250px)' }">
+        <ng-container *ngIf="form.valid">
+          <ng-container *ngIf="eventTypeFormValue === 'ipo'">
+            <ng-container *ngFor="let data of ipoData$ | async">
+              <event [ipo]="data"></event>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="eventTypeFormValue === 'earnings'">
+            <ng-container *ngFor="let data of earningsData$ | async">
+              <event [earning]="data"></event>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </p-scrollPanel>
+    </div>
+  </form>
+</div>

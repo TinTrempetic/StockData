@@ -69,13 +69,11 @@ export class FinnhubService {
 
   public getCalendarEvents(
     eventType: string,
-    fromDate: Date,
-    toDate: Date
+    date
   ): Observable<Earnings[] | Ipo[]> {
-    const from = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
-    const to = this.datePipe.transform(toDate, 'yyyy-MM-dd');
+    const formattedDate = this.datePipe.transform(date, 'yyyy-MM-dd');
 
-    const params = `from=${from}&to=${to}`;
+    const params = `from=${formattedDate}&to=${formattedDate}`;
 
     const route = endpoints.calendarEvents
       .replace('{eventType}', eventType)
