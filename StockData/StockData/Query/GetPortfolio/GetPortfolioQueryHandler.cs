@@ -30,7 +30,7 @@ namespace StockData.Query.GetPortfolio
                     Symbol = x.Symbol,
                     DateBought = x.DateBought,
                     Quantity = x.Quantity,
-                    Price = x.Price
+                    CurrentPrice = x.Price
                 })
                 .ToListAsync(cancellationToken);
 
