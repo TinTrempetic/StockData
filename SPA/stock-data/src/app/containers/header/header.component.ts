@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
-import { filter, Observable, Subject, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Subject, tap } from 'rxjs';
 import { FinnhubService } from 'src/app/services';
-import { StockLookupSelectItem } from 'src/app/types';
 
 @Component({
   selector: 'app-header',
