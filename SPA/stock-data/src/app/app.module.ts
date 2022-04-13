@@ -28,7 +28,9 @@ import { AccordionModule } from 'primeng/accordion';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
 import { AuthRoutingModule } from './auth-routing.module';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { AuthRoutingModule } from './auth-routing.module';
     AccordionModule,
     AuthRoutingModule,
     ProgressSpinnerModule,
+    ButtonModule,
+    TooltipModule,
   ],
   bootstrap: [AppComponent],
   providers: [DatePipe],

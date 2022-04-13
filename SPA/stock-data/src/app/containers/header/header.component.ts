@@ -14,6 +14,7 @@ export class HeaderComponent {
   suggestions$ = this._suggestions.asObservable();
 
   isAuth$ = this.authService.isAuthenticated();
+  user$ = this.authService.getUserData();
 
   constructor(
     private finnhubService: FinnhubService,

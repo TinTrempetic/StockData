@@ -8,7 +8,20 @@
   </div>
 
   <div class="header-buttons">
-    <button *ngIf="(isAuth$ | async) === false" (click)="login()">Login</button>
-    <button *ngIf="isAuth$ | async" (click)="logout()">Logout</button>
+    <ng-container *ngIf="!(isAuth$ | async); else isAuth">
+      <button pButton (click)="login()" label="Login"></button>
+    </ng-container>
+    <ng-template #isAuth>
+      <div>
+        <button
+          pButton
+          *ngIf="isAuth$ | async"
+          (click)="logout()"
+          label="Logout"
+          pTooltip="Logged in as {{ (user$ | async).email }}"
+          tooltipPosition="bottom"
+        ></button>
+      </div>
+    </ng-template>
   </div>
 </div>
