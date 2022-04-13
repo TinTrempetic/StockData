@@ -18,7 +18,7 @@
           *ngIf="isAuth$ | async"
           (click)="logout()"
           label="Logout"
-          pTooltip="Logged in as {{ (user$ | async).email }}"
+          pTooltip="Logged in as {{ (user$ | async)?.email }}"
           tooltipPosition="bottom"
         ></button>
       </div>

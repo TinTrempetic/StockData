@@ -45,3 +45,13 @@ p-dropdownitem li {
   bottom: 0;
   right: 0;
 }
+
+.table-block {
+  display: block;
+}
+
+.watchlist-table tbody,
+.portfolio-table tbody {
+  width: 100%;
+  height: calc(100vh - 250px);
+}
