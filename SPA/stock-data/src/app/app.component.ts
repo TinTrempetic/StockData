@@ -9,15 +9,6 @@ import { AuthenticationService } from './services/authentication';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  isAuth$ = this.authService.isAuthenticated();
-
+  isLoading$ = this.authService.isLoading();
   constructor(private authService: AuthenticationService) {}
-
-  login(): void {
-    this.authService.login();
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
 }

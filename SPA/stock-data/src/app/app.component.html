@@ -1,9 +1,6 @@
-<layout></layout>
-
-<div>
-  <button *ngIf="(isAuth$ | async) === false" (click)="login()">Login</button>
-  <button *ngIf="isAuth$ | async" (click)="logout()">Logout</button>
-</div>
-
-<button (click)="login()">Login</button>
-<button (click)="logout()">Logout</button>
+<ng-container *ngIf="isLoading$ | async; else elseTemplate">
+  <p-progressSpinner class="spinner-full-screen"></p-progressSpinner>
+</ng-container>
+<ng-template #elseTemplate>
+  <layout></layout>
+</ng-template>

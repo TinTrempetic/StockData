@@ -34,3 +34,14 @@ p-calendar span {
 p-dropdownitem li {
   width: 100% !important;
 }
+
+.spinner-full-screen {
+  position: fixed;
+  height: 2em;
+  width: 2em;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
