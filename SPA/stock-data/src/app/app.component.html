@@ -1,1 +1,6 @@
-<layout></layout>
+<ng-container *ngIf="isLoading$ | async; else elseTemplate">
+  <p-progressSpinner class="spinner-full-screen"></p-progressSpinner>
+</ng-container>
+<ng-template #elseTemplate>
+  <layout></layout>
+</ng-template>

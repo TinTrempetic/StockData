@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication';
 import { WatchlistItem } from 'src/app/types';
 
 @Component({
@@ -8,9 +9,11 @@ import { WatchlistItem } from 'src/app/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockWatchlistComponent implements OnInit {
+  isAuth$ = this.authService.isAuthenticated();
+
   watchlistItems: WatchlistItem[] = [];
 
-  constructor() {}
+  constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {}
 }

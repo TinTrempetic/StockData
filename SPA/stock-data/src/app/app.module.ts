@@ -27,6 +27,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
+import { AuthRoutingModule } from './auth-routing.module';
+import { TooltipModule } from 'primeng/tooltip';
+import { BlockUIModule } from 'primeng/blockui';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -56,6 +62,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     CalendarModule,
     ReactiveFormsModule,
     AccordionModule,
+    AuthRoutingModule,
+    ProgressSpinnerModule,
+    ButtonModule,
+    TooltipModule,
+    BlockUIModule,
+    PanelModule,
   ],
   bootstrap: [AppComponent],
   providers: [DatePipe],

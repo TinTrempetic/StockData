@@ -1,4 +1,4 @@
-<p-table [value]="watchlistItems">
+<p-table [value]="watchlistItems" class="watchlist-table">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="symbol">
@@ -29,6 +29,22 @@
       <td>{{ item.dayHighPrice }}</td>
       <td>{{ item.dayLowPrice }}</td>
       <td>Actions for id: {{ item.id }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="6">
+        <ng-container *ngIf="isAuth$ | async; else elseTemplate">
+          <div class="empty-message-text">
+            <h1>No items added to your watchlist.</h1>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="empty-message-text">
+            <h1>Login to view and add items to your watchlist.</h1>
+          </div>
+        </ng-template>
+      </td>
     </tr>
   </ng-template>
 </p-table>
