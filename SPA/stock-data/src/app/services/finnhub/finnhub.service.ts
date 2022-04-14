@@ -12,7 +12,7 @@ import {
   StockLookupResponse,
   StockLookupSelectItem,
 } from 'src/app/types';
-import { EventType } from 'src/app/enums';
+import { CandleResolution, EventType } from 'src/app/enums';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
@@ -91,17 +91,12 @@ export class FinnhubService {
     }
   }
 
-  public getStockCandles(
-    symbol: string,
-    resolution: number,
-    fromDate: Date,
-    toDate: Date
-  ): any {
+  public getStockCandles(symbol: string, resolution: string): any {
     const route = endpoints.stockCandles
       .replace('{symbol}', symbol)
-      .replace('{resolution}', resolution.toString())
-      .replace('{fromDate}', this.dateToUnixTimestamp(fromDate).toString())
-      .replace('{toDate}', this.dateToUnixTimestamp(toDate).toString())
+      .replace('{resolution}', resolution)
+      .replace('{fromDate}', this.getCandlesFromDate(resolution))
+      .replace('{toDate}', this.dateToUnixTimestamp(new Date()).toString())
       .replace('{token}', this.apiKey);
 
     return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
@@ -117,6 +112,39 @@ export class FinnhubService {
     return this.http
       .get<EarningsCalendarResponse>(route)
       .pipe(map((result) => result.earningsCalendar));
+  }
+
+  private getCandlesFromDate(resolution: string): string {
+    const date = new Date();
+
+    switch (resolution) {
+      case CandleResolution.Minute: {
+        date.setDate(date.getDate() - 1);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.FiveMinutes: {
+        date.setDate(date.getDate() - 5);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.FifteenMinutes: {
+        date.setDate(date.getDate() - 15);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.ThirtyMinutes: {
+        date.setDate(date.getDate() - 30);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.Hour: {
+        date.setDate(date.getDate() - 60);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.Day: {
+        date.setDate(date.getDate() - 1500);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      default:
+        return this.dateToUnixTimestamp(new Date()).toString();
+    }
   }
 
   private dateToUnixTimestamp(date: Date): number {

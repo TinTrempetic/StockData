@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subject,
+  take,
+} from 'rxjs';
+import { CandleResolution } from 'src/app/enums';
 import { FinnhubService } from 'src/app/services';
 
 @Component({
@@ -7,11 +15,27 @@ import { FinnhubService } from 'src/app/services';
   styleUrls: ['./candles.component.scss'],
 })
 export class CandlesComponent implements OnInit {
+  @Input() set symbol(input: string) {
+    if (!input) return;
+
+    this.getCandlesData(input);
+  }
+
+  private _symbol = new Subject();
+  symbol$ = this._symbol.asObservable();
+
+  resolution = CandleResolution.ThirtyMinutes;
+
+  candlesData$: Observable<any>;
+
   constructor(private finnhubService: FinnhubService) {}
 
-  ngOnInit(): void {
-    this.finnhubService
-      .getStockCandles('AAPL', 1, new Date('2022-4-14'), new Date('2022-4-15'))
+  ngOnInit(): void {}
+
+  private getCandlesData(symbol: string): void {
+    this.candlesData$ = this.finnhubService
+      .getStockCandles(symbol, this.resolution)
+      .pipe(take(1))
       .subscribe();
   }
 }
