@@ -3,7 +3,6 @@
     <stock-lookup
       [suggestions]="suggestions$ | async"
       (stockLookupChanged)="getStockSuggestions($event)"
-      (stockSelected)="stockSelected($event)"
     ></stock-lookup>
   </div>
 

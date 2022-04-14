@@ -14,6 +14,6 @@
   (completeMethod)="getFilteredStocks($event.query)"
 >
   <ng-template let-item pTemplate="item">
-    {{ item.label }} ({{ item.symbol }})
+    <p [routerLink]="item.symbol">{{ item.label }} ({{ item.symbol }})</p>
   </ng-template>
 </p-autoComplete>

@@ -91,6 +91,24 @@ export class FinnhubService {
     }
   }
 
+  public getStockCandles(
+    symbol: string,
+    resolution: number,
+    fromDate: Date,
+    toDate: Date
+  ): any {
+    const formattedFromDate = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
+
+    const formattedtoDate = this.datePipe.transform(toDate, 'yyyy-MM-dd');
+
+    const route = endpoints.symbolLookup
+      .replace('{symbol}', symbol)
+      .replace('{resolution}', resolution.toString())
+      .replace('{fromDate}', formattedFromDate)
+      .replace('{toDate}', formattedtoDate)
+      .replace('{token}', this.apiKey);
+  }
+
   private getIpoCalendar(route: string): Observable<Ipo[]> {
     return this.http
       .get<IpoCalendarResponse>(route)

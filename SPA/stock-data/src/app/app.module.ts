@@ -33,6 +33,27 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { TooltipModule } from 'primeng/tooltip';
 import { BlockUIModule } from 'primeng/blockui';
 import { PanelModule } from 'primeng/panel';
+import { CandlesComponent } from './containers/candles/candles.component';
+import { RecommendationTrendsComponent } from './containers/recommendation-trends/recommendation-trends.component';
+import { CompanyNewsComponent } from './containers/company-news/company-news.component';
+import { InsiderTransactionsComponent } from './containers/insider-transactions/insider-transactions.component';
+import { CompanyProfileComponent } from './containers/company-profile/company-profile.component';
+import { BasicFinancialsComponent } from './containers/basic-financials/basic-financials.component';
+import { RouterModule, Routes } from '@angular/router';
+import { StockDataComponent } from './containers/stock-data/stock-data.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: ':symbol',
+    component: StockDataComponent,
+  },
+];
 
 @NgModule({
   declarations: [
@@ -47,6 +68,12 @@ import { PanelModule } from 'primeng/panel';
     EventsComponent,
     StockLookupComponent,
     MarketNewsItemComponent,
+    CandlesComponent,
+    RecommendationTrendsComponent,
+    CompanyNewsComponent,
+    InsiderTransactionsComponent,
+    CompanyProfileComponent,
+    BasicFinancialsComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +95,7 @@ import { PanelModule } from 'primeng/panel';
     TooltipModule,
     BlockUIModule,
     PanelModule,
+    RouterModule.forRoot(routes),
   ],
   bootstrap: [AppComponent],
   providers: [DatePipe],
