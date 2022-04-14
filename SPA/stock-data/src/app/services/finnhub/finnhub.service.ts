@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { endpoints } from './finnhub.endpoints';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import {
   Earnings,
   EarningsCalendarResponse,
@@ -97,16 +97,14 @@ export class FinnhubService {
     fromDate: Date,
     toDate: Date
   ): any {
-    const formattedFromDate = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
-
-    const formattedtoDate = this.datePipe.transform(toDate, 'yyyy-MM-dd');
-
-    const route = endpoints.symbolLookup
+    const route = endpoints.stockCandles
       .replace('{symbol}', symbol)
       .replace('{resolution}', resolution.toString())
-      .replace('{fromDate}', formattedFromDate)
-      .replace('{toDate}', formattedtoDate)
+      .replace('{fromDate}', this.dateToUnixTimestamp(fromDate).toString())
+      .replace('{toDate}', this.dateToUnixTimestamp(toDate).toString())
       .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
   }
 
   private getIpoCalendar(route: string): Observable<Ipo[]> {
@@ -119,5 +117,9 @@ export class FinnhubService {
     return this.http
       .get<EarningsCalendarResponse>(route)
       .pipe(map((result) => result.earningsCalendar));
+  }
+
+  private dateToUnixTimestamp(date: Date): number {
+    return Math.round(new Date(date).getTime() / 1000);
   }
 }

@@ -74,6 +74,7 @@ const routes: Routes = [
     InsiderTransactionsComponent,
     CompanyProfileComponent,
     BasicFinancialsComponent,
+    StockDataComponent,
   ],
   imports: [
     BrowserModule,
