@@ -1,13 +1,18 @@
 <div class="header">
+  <ng-container *ngIf="backButtonVisible$ | async">
+    <div class="back-button p-component">
+      <i class="pi pi-arrow-left" routerLink="/">Return to Dashboard</i>
+    </div>
+  </ng-container>
+
   <div class="lookup">
     <stock-lookup
       [suggestions]="suggestions$ | async"
       (stockLookupChanged)="getStockSuggestions($event)"
-      (stockSelected)="stockSelected($event)"
     ></stock-lookup>
   </div>
 
-  <div class="header-buttons">
+  <div class="auth-button">
     <ng-container *ngIf="!(isAuth$ | async); else isAuth">
       <button pButton (click)="login()" label="Login"></button>
     </ng-container>

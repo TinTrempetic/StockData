@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Subject, tap } from 'rxjs';
 import { FinnhubService } from 'src/app/services';
 import { AuthenticationService } from 'src/app/services/authentication';
+import { StockDataService } from 'src/app/services/stock-data.service.ts';
+import { StockLookupSelectItem } from 'src/app/types';
 
 @Component({
   selector: 'app-header',
@@ -10,37 +12,36 @@ import { AuthenticationService } from 'src/app/services/authentication';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  private _suggestions = new Subject<any>();
+  private _suggestions = new Subject<StockLookupSelectItem[]>();
   suggestions$ = this._suggestions.asObservable();
 
   isAuth$ = this.authService.isAuthenticated();
   user$ = this.authService.getUserData();
 
+  backButtonVisible$ = this.stockDataService.backButtonVisible$;
+
   constructor(
     private finnhubService: FinnhubService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private stockDataService: StockDataService
   ) {}
 
-  public getStockSuggestions(symbol: any): void {
+  public getStockSuggestions(symbol: string): void {
     this.finnhubService
       .stockLookup(symbol)
       .pipe(tap((result) => this.updateSuggestions(result)))
       .subscribe();
   }
 
-  public stockSelected(event: any): void {
-    console.log('stock selected: ', event);
-  }
-
-  private updateSuggestions(suggestions: any) {
+  private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
     this._suggestions.next(suggestions);
   }
 
-  login(): void {
+  public login(): void {
     this.authService.login();
   }
 
-  logout(): void {
+  public logout(): void {
     this.authService.logout();
   }
 }

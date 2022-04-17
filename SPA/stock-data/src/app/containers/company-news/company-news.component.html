@@ -1,0 +1,13 @@
+<ng-container *ngIf="news$ | async as news">
+  <div class="container p-component">
+    <h1>Related News</h1>
+    <p-scrollPanel [style]="{ width: '100%', height: 'calc(100vh - 100px)' }">
+      <ng-container *ngFor="let item of news">
+        <app-market-news-item
+          [item]="item"
+          [displaySummary]="false"
+        ></app-market-news-item>
+      </ng-container>
+    </p-scrollPanel>
+  </div>
+</ng-container>

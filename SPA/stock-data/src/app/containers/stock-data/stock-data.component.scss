@@ -1,0 +1,45 @@
+.layout {
+  padding-top: 20px;
+  display: grid;
+  grid-template-rows: [row-start] 40% [row-2] 60% [row-end];
+  grid-template-columns: [col-start] 30% [col-2] 30% [col-3] 40% [col-end];
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.candles {
+  grid-row-start: row-2;
+  grid-row-end: row-end;
+  grid-column-start: col-start;
+  grid-column-end: col-3;
+  height: 100%;
+  width: 100%;
+}
+
+.company-news {
+  grid-row-start: row-start;
+  grid-row-end: row-end;
+  grid-column-start: col-3;
+  grid-column-end: col-end;
+  height: 100%;
+  width: 100%;
+}
+
+.company-profile {
+  grid-row-start: row-start;
+  grid-row-end: row-2;
+  grid-column-start: col-start;
+  grid-column-end: col-2;
+  height: 100%;
+  width: 100%;
+}
+
+.recommendation-trends {
+  grid-row-start: row-start;
+  grid-row-end: row-2;
+  grid-column-start: col-2;
+  grid-column-end: col-3;
+  height: 100%;
+  width: 100%;
+}

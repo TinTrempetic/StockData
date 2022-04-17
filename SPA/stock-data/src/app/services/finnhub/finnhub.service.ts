@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { endpoints } from './finnhub.endpoints';
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { CandleResolution, EventType } from 'src/app/enums';
 import {
   Earnings,
   EarningsCalendarResponse,
@@ -12,8 +13,9 @@ import {
   StockLookupResponse,
   StockLookupSelectItem,
 } from 'src/app/types';
-import { EventType } from 'src/app/enums';
-import { DatePipe } from '@angular/common';
+import { CompanyProfile } from 'src/app/types/company-profile.type';
+import { RecommendationTrends } from 'src/app/types/recommendation-trends.type';
+import { endpoints } from './finnhub.endpoints';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +93,61 @@ export class FinnhubService {
     }
   }
 
+  public getStockCandles(symbol: string, resolution: string): any {
+    const route = endpoints.stockCandles
+      .replace('{symbol}', symbol)
+      .replace('{resolution}', resolution)
+      .replace('{fromDate}', this.getCandlesFromDate(resolution))
+      .replace('{toDate}', this.dateToUnixTimestamp(new Date()).toString())
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route);
+  }
+
+  /**
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   */
+  public getCompanyNews(symbol: string): Observable<MarketNews[]> {
+    const toDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+    const fromDate = new Date();
+    fromDate.setDate(fromDate.getDate() - 30);
+
+    const formattedToDate = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
+
+    const route = endpoints.companyNews
+      .replace('{symbol}', symbol)
+      .replace('{fromDate}', formattedToDate)
+      .replace('{toDate}', toDate)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<MarketNews[]>(route);
+  }
+
+  /**
+   * Get latest analyst recommendation trends for a company.
+   */
+  public getRecommendationTrends(
+    symbol: string
+  ): Observable<RecommendationTrends[]> {
+    const route = endpoints.recommendationTrends
+      .replace('{symbol}', symbol)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<RecommendationTrends[]>(route);
+  }
+
+  /**
+   * Get general information of a company.
+   */
+  public getCompanyProfile(symbol: string): Observable<CompanyProfile> {
+    const route = endpoints.companyProfile
+      .replace('{symbol}', symbol)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<CompanyProfile>(route);
+  }
+
   private getIpoCalendar(route: string): Observable<Ipo[]> {
     return this.http
       .get<IpoCalendarResponse>(route)
@@ -101,5 +158,42 @@ export class FinnhubService {
     return this.http
       .get<EarningsCalendarResponse>(route)
       .pipe(map((result) => result.earningsCalendar));
+  }
+
+  private getCandlesFromDate(resolution: string): string {
+    const date = new Date();
+
+    switch (resolution) {
+      case CandleResolution.Minute: {
+        date.setDate(date.getDate() - 1);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.FiveMinutes: {
+        date.setDate(date.getDate() - 5);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.FifteenMinutes: {
+        date.setDate(date.getDate() - 15);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.ThirtyMinutes: {
+        date.setDate(date.getDate() - 30);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.Hour: {
+        date.setDate(date.getDate() - 60);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      case CandleResolution.Day: {
+        date.setDate(date.getDate() - 1500);
+        return this.dateToUnixTimestamp(date).toString();
+      }
+      default:
+        return this.dateToUnixTimestamp(new Date()).toString();
+    }
+  }
+
+  private dateToUnixTimestamp(date: Date): number {
+    return Math.round(new Date(date).getTime() / 1000);
   }
 }
