@@ -8,7 +8,7 @@ export const endpoints = {
   stockCandles:
     'https://finnhub.io/api/v1/stock/candle?symbol={symbol}&resolution={resolution}&from={fromDate}&to={toDate}&token={token}',
   companyNews:
-    'https://finnhub.io/api/v1/company-news?symbol=AAPL&from={fromDate}&to={toDate}&token={token}',
+    'https://finnhub.io/api/v1/company-news?symbol={symbol}&from={fromDate}&to={toDate}&token={token}',
   recommendationTrends:
     'https://finnhub.io/api/v1/stock/recommendation?symbol={symbol}&token={token}',
   companyProfile:
