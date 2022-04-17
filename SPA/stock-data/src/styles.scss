@@ -60,3 +60,12 @@ p-dropdownitem li {
   width: 100%;
   height: calc(100vh - 250px);
 }
+
+li p {
+  display: block;
+  margin: 0;
+  padding-block-start: 1em;
+  padding-block-end: 1em;
+  padding-inline-start: 0px;
+  padding-inline-end: 0px;
+}
