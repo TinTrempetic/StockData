@@ -13,6 +13,4 @@ export const endpoints = {
     'https://finnhub.io/api/v1/stock/recommendation?symbol={symbol}&token={token}',
   companyProfile:
     'https://finnhub.io/api/v1/stock/profile2?symbol={symbol}&token={token}',
-  basicFinancials:
-    'https://finnhub.io/api/v1/stock/metric?symbol={symbol}&metric=all&token={token}',
 };

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CandleResolution, EventType } from 'src/app/enums';
 import {
   Earnings,
@@ -146,17 +146,6 @@ export class FinnhubService {
       .replace('{token}', this.apiKey);
 
     return this.http.get<CompanyProfile>(route);
-  }
-
-  /**
-   * Get company basic financials such as margin, P/E ratio, 52-week high/low etc.
-   */
-  public GetBasicFinancials(symbol: string): any {
-    const route = endpoints.basicFinancials
-      .replace('{symbol}', symbol)
-      .replace('{token}', this.apiKey);
-
-    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
   }
 
   private getIpoCalendar(route: string): Observable<Ipo[]> {
