@@ -101,7 +101,7 @@ export class FinnhubService {
       .replace('{toDate}', this.dateToUnixTimestamp(new Date()).toString())
       .replace('{token}', this.apiKey);
 
-    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+    return this.http.get<any>(route);
   }
 
   /**
@@ -121,9 +121,7 @@ export class FinnhubService {
       .replace('{toDate}', toDate)
       .replace('{token}', this.apiKey);
 
-    return this.http
-      .get<MarketNews[]>(route)
-      .pipe(tap((result) => console.log(result)));
+    return this.http.get<MarketNews[]>(route);
   }
 
   /**

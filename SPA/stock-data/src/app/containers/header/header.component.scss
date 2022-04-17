@@ -1,16 +1,27 @@
 .header {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: [col-start] 20% [col-2] auto [col-3] 20% [col-end];
   align-items: center;
-  justify-content: flex-end;
 }
 
 .lookup {
-  margin-right: 10%;
-  width: 35%;
+  padding-left: 30%;
+  width: 100%;
+  grid-column-start: col-2;
+  grid-column-end: col-3;
 }
 
-.header-buttons {
-  margin-right: 5%;
+.auth-button {
+  grid-column-start: col-3;
+  grid-column-end: col-end;
+  text-align: center;
+}
+
+.back-button {
+  text-align: center;
+  cursor: pointer;
+  grid-column-start: col-start;
+  grid-column-end: col-2;
 }
