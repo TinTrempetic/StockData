@@ -39,5 +39,14 @@ export class CandlesComponent implements OnInit {
       .subscribe();
 
     this.finnhubService.getCompanyNews(symbol).pipe(take(1)).subscribe();
+
+    this.finnhubService
+      .getRecommendationTrends(symbol)
+      .pipe(take(1))
+      .subscribe();
+
+    this.finnhubService.getCompanyProfile(symbol).pipe(take(1)).subscribe();
+
+    this.finnhubService.GetBasicFinancials(symbol).pipe(take(1)).subscribe();
   }
 }

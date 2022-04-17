@@ -122,6 +122,39 @@ export class FinnhubService {
     return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
   }
 
+  /**
+   * Get latest analyst recommendation trends for a company.
+   */
+  public getRecommendationTrends(symbol: string): any {
+    const route = endpoints.recommendationTrends
+      .replace('{symbol}', symbol)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+  }
+
+  /**
+   * Get general information of a company.
+   */
+  public getCompanyProfile(symbol: string): any {
+    const route = endpoints.companyProfile
+      .replace('{symbol}', symbol)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+  }
+
+  /**
+   * Get company basic financials such as margin, P/E ratio, 52-week high/low etc.
+   */
+  public GetBasicFinancials(symbol: string): any {
+    const route = endpoints.basicFinancials
+      .replace('{symbol}', symbol)
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+  }
+
   private getIpoCalendar(route: string): Observable<Ipo[]> {
     return this.http
       .get<IpoCalendarResponse>(route)

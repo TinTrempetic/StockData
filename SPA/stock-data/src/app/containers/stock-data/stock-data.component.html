@@ -1,3 +1,19 @@
 <ng-container *ngIf="symbol$ | async as symbol">
-  <app-candles [symbol]="symbol"></app-candles>
+  <div class="layout">
+    <div class="candles">
+      <app-candles [symbol]="symbol"></app-candles>
+    </div>
+
+    <div class="company-news">
+      <app-company-news></app-company-news>
+    </div>
+
+    <div class="company-profile">
+      <app-company-profile></app-company-profile>
+    </div>
+
+    <div class="recommendation-trends">
+      <app-recommendation-trends></app-recommendation-trends>
+    </div>
+  </div>
 </ng-container>
