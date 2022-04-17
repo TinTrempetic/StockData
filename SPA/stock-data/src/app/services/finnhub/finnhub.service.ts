@@ -107,11 +107,11 @@ export class FinnhubService {
   /**
    * List latest company news by symbol. This endpoint is only available for North American companies.
    */
-  public getCompanyNews(symbol: string): any {
+  public getCompanyNews(symbol: string): Observable<MarketNews[]> {
     const toDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
     const fromDate = new Date();
-    fromDate.setDate(fromDate.getDate() - 90);
+    fromDate.setDate(fromDate.getDate() - 30);
 
     const formattedToDate = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
 
@@ -121,7 +121,9 @@ export class FinnhubService {
       .replace('{toDate}', toDate)
       .replace('{token}', this.apiKey);
 
-    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+    return this.http
+      .get<MarketNews[]>(route)
+      .pipe(tap((result) => console.log(result)));
   }
 
   /**

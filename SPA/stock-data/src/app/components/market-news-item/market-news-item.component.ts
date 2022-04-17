@@ -9,4 +9,6 @@ import { MarketNews } from 'src/app/types';
 })
 export class MarketNewsItemComponent {
   @Input() item: MarketNews;
+
+  @Input() displaySummary: boolean;
 }

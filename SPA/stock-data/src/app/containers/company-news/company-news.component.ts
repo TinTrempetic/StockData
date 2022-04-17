@@ -1,9 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
+import { FinnhubService } from 'src/app/services';
+import { MarketNews } from 'src/app/types';
 
 @Component({
   selector: 'app-company-news',
@@ -11,10 +9,22 @@ import {
   styleUrls: ['./company-news.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CompanyNewsComponent implements OnInit {
-  @Input() symbol: string;
+export class CompanyNewsComponent {
+  @Input() set symbol(input: string) {
+    if (!input.length) return;
 
-  constructor() {}
+    this._data.next(input);
+  }
 
-  ngOnInit(): void {}
+  _data = new BehaviorSubject<string>(undefined);
+  news$ = this._data.asObservable().pipe(
+    filter((x) => !!x?.length),
+    switchMap((symbol) => this.getCompanyNewsData(symbol))
+  );
+
+  constructor(private finnhubService: FinnhubService) {}
+
+  private getCompanyNewsData(symbol: string): Observable<MarketNews[]> {
+    return this.finnhubService.getCompanyNews(symbol);
+  }
 }
