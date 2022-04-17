@@ -7,4 +7,6 @@ export const endpoints = {
     'https://finnhub.io/api/v1/calendar/{eventType}?{params}&token={token}',
   stockCandles:
     'https://finnhub.io/api/v1/stock/candle?symbol={symbol}&resolution={resolution}&from={fromDate}&to={toDate}&token={token}',
+  companyNews:
+    'https://finnhub.io/api/v1/company-news?symbol=AAPL&from={fromDate}&to={toDate}&token={token}',
 };

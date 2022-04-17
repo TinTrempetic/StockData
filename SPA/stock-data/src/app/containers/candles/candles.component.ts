@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
 import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  Subject,
-  take,
-} from 'rxjs';
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Observable, Subject, take } from 'rxjs';
 import { CandleResolution } from 'src/app/enums';
 import { FinnhubService } from 'src/app/services';
 
@@ -13,6 +12,7 @@ import { FinnhubService } from 'src/app/services';
   selector: 'app-candles',
   templateUrl: './candles.component.html',
   styleUrls: ['./candles.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CandlesComponent implements OnInit {
   @Input() set symbol(input: string) {
@@ -37,5 +37,7 @@ export class CandlesComponent implements OnInit {
       .getStockCandles(symbol, this.resolution)
       .pipe(take(1))
       .subscribe();
+
+    this.finnhubService.getCompanyNews(symbol).pipe(take(1)).subscribe();
   }
 }

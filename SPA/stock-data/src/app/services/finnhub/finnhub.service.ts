@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { endpoints } from './finnhub.endpoints';
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
+import { CandleResolution, EventType } from 'src/app/enums';
 import {
   Earnings,
   EarningsCalendarResponse,
@@ -12,8 +13,7 @@ import {
   StockLookupResponse,
   StockLookupSelectItem,
 } from 'src/app/types';
-import { CandleResolution, EventType } from 'src/app/enums';
-import { DatePipe } from '@angular/common';
+import { endpoints } from './finnhub.endpoints';
 
 @Injectable({
   providedIn: 'root',
@@ -97,6 +97,26 @@ export class FinnhubService {
       .replace('{resolution}', resolution)
       .replace('{fromDate}', this.getCandlesFromDate(resolution))
       .replace('{toDate}', this.dateToUnixTimestamp(new Date()).toString())
+      .replace('{token}', this.apiKey);
+
+    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+  }
+
+  /**
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   */
+  public getCompanyNews(symbol: string): any {
+    const toDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+    const fromDate = new Date();
+    fromDate.setDate(fromDate.getDate() - 90);
+
+    const formattedToDate = this.datePipe.transform(fromDate, 'yyyy-MM-dd');
+
+    const route = endpoints.companyNews
+      .replace('{symbol}', symbol)
+      .replace('{fromDate}', formattedToDate)
+      .replace('{toDate}', toDate)
       .replace('{token}', this.apiKey);
 
     return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
