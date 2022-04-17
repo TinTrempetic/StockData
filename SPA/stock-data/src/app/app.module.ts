@@ -26,13 +26,11 @@ import { EventComponent } from './components/event/event.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MarketNewsItemComponent } from './components/market-news-item/market-news-item.component';
 import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
-import { BasicFinancialsComponent } from './containers/basic-financials/basic-financials.component';
 import { CandlesComponent } from './containers/candles/candles.component';
 import { CompanyNewsComponent } from './containers/company-news/company-news.component';
 import { CompanyProfileComponent } from './containers/company-profile/company-profile.component';
 import { EventsComponent } from './containers/events/events.component';
 import { HeaderComponent } from './containers/header/header.component';
-import { InsiderTransactionsComponent } from './containers/insider-transactions/insider-transactions.component';
 import { MarketNewsComponent } from './containers/market-news/market-news.component';
 import { RecommendationTrendsComponent } from './containers/recommendation-trends/recommendation-trends.component';
 import { StockDataComponent } from './containers/stock-data/stock-data.component';
@@ -68,9 +66,7 @@ const routes: Routes = [
     CandlesComponent,
     RecommendationTrendsComponent,
     CompanyNewsComponent,
-    InsiderTransactionsComponent,
     CompanyProfileComponent,
-    BasicFinancialsComponent,
     StockDataComponent,
   ],
   imports: [
