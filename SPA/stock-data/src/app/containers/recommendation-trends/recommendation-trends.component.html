@@ -1,1 +1,13 @@
-<div class="blue">Recommendation Trends</div>
+<ng-container *ngIf="data$ | async as data">
+  <div class="container full-size p-component">
+    <h1>Recommendation Trends</h1>
+    <div class="trends">
+      <p><strong>Date: </strong>{{ data[0].period ?? "Unknown" }}</p>
+      <p><strong>Strong Buy: </strong>{{ data[0].strongBuy ?? "Unknown" }}</p>
+      <p><strong>Buy: </strong>{{ data[0].buy ?? "Unknown" }}</p>
+      <p><strong>Hold: </strong>{{ data[0].hold ?? "Unknown" }}</p>
+      <p><strong>Sell: </strong>{{ data[0].sell ?? "Unknown" }}</p>
+      <p><strong>Strong Sell: </strong>{{ data[0].strongSell ?? "Unknown" }}</p>
+    </div>
+  </div>
+</ng-container>

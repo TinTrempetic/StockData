@@ -14,6 +14,7 @@ import {
   StockLookupSelectItem,
 } from 'src/app/types';
 import { CompanyProfile } from 'src/app/types/company-profile.type';
+import { RecommendationTrends } from 'src/app/types/recommendation-trends.type';
 import { endpoints } from './finnhub.endpoints';
 
 @Injectable({
@@ -126,12 +127,14 @@ export class FinnhubService {
   /**
    * Get latest analyst recommendation trends for a company.
    */
-  public getRecommendationTrends(symbol: string): any {
+  public getRecommendationTrends(
+    symbol: string
+  ): Observable<RecommendationTrends[]> {
     const route = endpoints.recommendationTrends
       .replace('{symbol}', symbol)
       .replace('{token}', this.apiKey);
 
-    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+    return this.http.get<RecommendationTrends[]>(route);
   }
 
   /**
