@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-stock-data',
@@ -14,8 +14,11 @@ export class StockDataComponent implements OnInit {
   symbol$ = this._symbol.asObservable();
 
   ngOnInit(): void {
-    const symbol = this.route.snapshot.params['symbol'];
-
-    this._symbol.next(symbol);
+    this.route.params
+      .pipe(
+        filter((x) => !!x['symbol']),
+        tap((data) => this._symbol.next(data['symbol']))
+      )
+      .subscribe();
   }
 }

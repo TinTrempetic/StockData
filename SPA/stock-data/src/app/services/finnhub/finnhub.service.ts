@@ -13,6 +13,7 @@ import {
   StockLookupResponse,
   StockLookupSelectItem,
 } from 'src/app/types';
+import { CompanyProfile } from 'src/app/types/company-profile.type';
 import { endpoints } from './finnhub.endpoints';
 
 @Injectable({
@@ -136,12 +137,12 @@ export class FinnhubService {
   /**
    * Get general information of a company.
    */
-  public getCompanyProfile(symbol: string): any {
+  public getCompanyProfile(symbol: string): Observable<CompanyProfile> {
     const route = endpoints.companyProfile
       .replace('{symbol}', symbol)
       .replace('{token}', this.apiKey);
 
-    return this.http.get<any>(route).pipe(tap((result) => console.log(result)));
+    return this.http.get<CompanyProfile>(route);
   }
 
   /**
