@@ -1,4 +1,5 @@
 .layout {
+  padding-top: 20px;
   display: grid;
   grid-template-rows: [row-start] 40% [row-2] 60% [row-end];
   grid-template-columns: [col-start] 30% [col-2] 30% [col-3] 40% [col-end];
