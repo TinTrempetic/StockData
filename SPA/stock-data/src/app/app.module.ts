@@ -11,6 +11,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -90,6 +91,7 @@ const routes: Routes = [
     BlockUIModule,
     PanelModule,
     CardModule,
+    ChartModule,
     RouterModule.forRoot(routes),
   ],
   bootstrap: [AppComponent],

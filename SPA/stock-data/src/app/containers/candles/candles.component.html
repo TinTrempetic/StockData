@@ -1,1 +1,5 @@
-<div class="green">Candles</div>
+<ng-container *ngIf="data$ | async as data"></ng-container>
+
+<div class="card">
+  <p-chart type="line" [data]="data$ | async"></p-chart>
+</div>
