@@ -1,6 +1,13 @@
 import { formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  switchMap,
+} from 'rxjs';
 import { CandleResolution } from 'src/app/enums';
 import { FinnhubService } from 'src/app/services';
 import { StockCandle } from 'src/app/types';
@@ -23,20 +30,46 @@ export class CandlesComponent {
   }
 
   private _symbol = new BehaviorSubject<string>('');
+  symbol$ = this._symbol.asObservable();
 
-  data$ = this._symbol.asObservable().pipe(
-    filter((symbol) => !!symbol.length),
-    switchMap((symbol) => this.getCandlesData(symbol)),
+  private _resolution = new BehaviorSubject<string>(CandleResolution.Minute);
+  resolution$ = this._resolution.asObservable();
+
+  data$ = combineLatest([this.symbol$, this.resolution$]).pipe(
+    map(([symbol, resolution]) => {
+      return { symbol, resolution };
+    }),
+    filter((data) => !!data.symbol.length),
+    switchMap((data) =>
+      this.getCandlesData(
+        data.symbol,
+        data.resolution || CandleResolution.Minute
+      )
+    ),
     filter((data) => !!data),
     map((data) => this.buildDataForChart(data))
   );
 
-  resolution = CandleResolution.Minute;
+  resolutionOptions = [
+    { value: CandleResolution.Minute, label: '1 Minute' },
+    { value: CandleResolution.FiveMinutes, label: '5 Minutes' },
+    { value: CandleResolution.FifteenMinutes, label: '15 Minutes' },
+    { value: CandleResolution.ThirtyMinutes, label: '30 Minutes' },
+    { value: CandleResolution.Hour, label: '1 Hour' },
+    { value: CandleResolution.Day, label: 'Day' },
+  ];
 
   constructor(private finnhubService: FinnhubService) {}
 
-  private getCandlesData(symbol: string): Observable<StockCandle> {
-    return this.finnhubService.getStockCandles(symbol, this.resolution);
+  public resolutionChanged(resolution: string): void {
+    this._resolution.next(resolution);
+  }
+
+  private getCandlesData(
+    symbol: string,
+    resolution: string
+  ): Observable<StockCandle> {
+    return this.finnhubService.getStockCandles(symbol, resolution);
   }
 
   private buildDataForChart(input: StockCandle) {
@@ -73,6 +106,6 @@ export class CandlesComponent {
   }
 
   private formatLabel(input: Date): string {
-    return formatDate(input, 'short', 'en-US');
+    return formatDate(input, 'medium', 'en-US');
   }
 }

@@ -1,5 +1,8 @@
-<ng-container *ngIf="data$ | async as data"></ng-container>
+<div class="container">
+  <p-dropdown
+    [options]="resolutionOptions"
+    (onChange)="resolutionChanged($event.value)"
+  ></p-dropdown>
 
-<div class="card">
   <p-chart type="line" [data]="data$ | async"></p-chart>
 </div>
