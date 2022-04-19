@@ -15,6 +15,7 @@ import {
 } from 'src/app/types';
 import { CompanyProfile } from 'src/app/types/company-profile.type';
 import { RecommendationTrends } from 'src/app/types/recommendation-trends.type';
+import { CandleDataResponse, StockCandle } from '../../types';
 import { endpoints } from './finnhub.endpoints';
 
 @Injectable({
@@ -93,7 +94,10 @@ export class FinnhubService {
     }
   }
 
-  public getStockCandles(symbol: string, resolution: string): any {
+  public getStockCandles(
+    symbol: string,
+    resolution: string
+  ): Observable<StockCandle> {
     const route = endpoints.stockCandles
       .replace('{symbol}', symbol)
       .replace('{resolution}', resolution)
@@ -101,7 +105,18 @@ export class FinnhubService {
       .replace('{toDate}', this.dateToUnixTimestamp(new Date()).toString())
       .replace('{token}', this.apiKey);
 
-    return this.http.get<any>(route);
+    return this.http.get<CandleDataResponse>(route).pipe(
+      map((data: CandleDataResponse) => {
+        return {
+          closePrices: data.c,
+          highPrices: data.h,
+          lowPrices: data.l,
+          openPrices: data.o,
+          timestamp: data.t,
+          volumeData: data.v,
+        } as StockCandle;
+      })
+    );
   }
 
   /**
