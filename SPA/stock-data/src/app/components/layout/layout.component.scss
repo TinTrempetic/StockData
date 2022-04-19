@@ -1,26 +1,27 @@
 .layout {
-    display: grid;
-    grid-template-rows: [row-start] 50px [row-2] auto [row-end];
-    grid-template-columns: [col-start] 50px [col-2] auto [col-3] 50px [col-end];
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-rows: [row-start] 50px [row-2] calc(100% - 50px) [row-end];
+  grid-template-columns: [col-start] 50px [col-2] calc(100% - 100px) [col-3] 50px [col-end];
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .header {
-    grid-row-start: row-start;
-    grid-row-end: row-2;
-    grid-column-start: col-start;
-    grid-column-end: col-end;
-    height: 100%;
-    width: 100%;
+  grid-row-start: row-start;
+  grid-row-end: row-2;
+  grid-column-start: col-start;
+  grid-column-end: col-end;
+  height: 100%;
+  width: 100%;
 }
 
 .dashboard {
-    grid-row-start: row-2;
-    grid-row-end: row-end;
-    grid-column-start: col-2;
-    grid-column-end: col-3;
-    height: 100%;
-    width: 100%;
+  grid-row-start: row-2;
+  grid-row-end: row-end;
+  grid-column-start: col-2;
+  grid-column-end: col-3;
+  height: 100%;
+  width: 100%;
 }
