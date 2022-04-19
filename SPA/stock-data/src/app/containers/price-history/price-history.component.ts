@@ -13,12 +13,12 @@ import { FinnhubService } from 'src/app/services';
 import { StockCandle } from 'src/app/types';
 
 @Component({
-  selector: 'app-candles',
-  templateUrl: './candles.component.html',
-  styleUrls: ['./candles.component.scss'],
+  selector: 'app-price-history',
+  templateUrl: './price-history.component.html',
+  styleUrls: ['./price-history.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CandlesComponent {
+export class PriceHistoryComponent {
   private companySymbol: string;
 
   @Input() set symbol(input: string) {
