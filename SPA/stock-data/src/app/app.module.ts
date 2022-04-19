@@ -11,6 +11,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -26,12 +27,12 @@ import { EventComponent } from './components/event/event.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MarketNewsItemComponent } from './components/market-news-item/market-news-item.component';
 import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
-import { CandlesComponent } from './containers/candles/candles.component';
 import { CompanyNewsComponent } from './containers/company-news/company-news.component';
 import { CompanyProfileComponent } from './containers/company-profile/company-profile.component';
 import { EventsComponent } from './containers/events/events.component';
 import { HeaderComponent } from './containers/header/header.component';
 import { MarketNewsComponent } from './containers/market-news/market-news.component';
+import { PriceHistoryComponent } from './containers/price-history/price-history.component';
 import { RecommendationTrendsComponent } from './containers/recommendation-trends/recommendation-trends.component';
 import { StockDataComponent } from './containers/stock-data/stock-data.component';
 import { StockPortfolioComponent } from './containers/stock-portfolio/stock-portfolio.component';
@@ -63,7 +64,7 @@ const routes: Routes = [
     EventsComponent,
     StockLookupComponent,
     MarketNewsItemComponent,
-    CandlesComponent,
+    PriceHistoryComponent,
     RecommendationTrendsComponent,
     CompanyNewsComponent,
     CompanyProfileComponent,
@@ -90,6 +91,7 @@ const routes: Routes = [
     BlockUIModule,
     PanelModule,
     CardModule,
+    ChartModule,
     RouterModule.forRoot(routes),
   ],
   bootstrap: [AppComponent],

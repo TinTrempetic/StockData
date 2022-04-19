@@ -1,7 +1,7 @@
 <ng-container *ngIf="symbol$ | async as symbol">
   <div class="layout">
-    <div class="candles">
-      <app-candles [symbol]="symbol"></app-candles>
+    <div class="price-history">
+      <app-price-history [symbol]="symbol"></app-price-history>
     </div>
 
     <div class="company-news">
