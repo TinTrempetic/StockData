@@ -10,8 +10,6 @@ namespace StockData.Query.GetWatchlist
 {
     public class GetWatchlistQueryHandler : IRequestHandler<GetWatchlistQuery, List<GetWatchlistQueryResponse>>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
 
         public GetWatchlistQueryHandler(StockDataContext context)
@@ -23,7 +21,7 @@ namespace StockData.Query.GetWatchlist
         {
             var watchlist = await context.WatchlistItems
                 .AsNoTracking()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == request.UserId)
                 .Select(x => new GetWatchlistQueryResponse
                 {
                     Id = x.Id,

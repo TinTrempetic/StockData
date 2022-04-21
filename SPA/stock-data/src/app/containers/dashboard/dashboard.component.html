@@ -5,7 +5,10 @@
     </p-tabPanel>
     <p-tabPanel header="Watchlist">
       <ng-template pTemplate="content">
-        <stock-watchlist></stock-watchlist>
+        <stock-watchlist
+          [isAuth]="isAuth$ | async"
+          [user]="userData$ | async"
+        ></stock-watchlist>
       </ng-template>
     </p-tabPanel>
     <p-tabPanel header="Market News">

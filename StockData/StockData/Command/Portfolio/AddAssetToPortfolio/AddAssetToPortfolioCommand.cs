@@ -6,6 +6,7 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
 {
     public class AddAssetToPortfolioCommand : IRequest<int>
     {
+        public string UserId { get; set; }
         public string Symbol { get; set; }
         public DateTime DateBought { get; set; }
         public float Quantity { get; set; }

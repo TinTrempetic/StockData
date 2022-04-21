@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { User } from '@auth0/auth0-angular';
+import { StockDataService } from 'src/app/services/stock-data.service.ts';
 import { WatchlistItem } from 'src/app/types';
 
 @Component({
@@ -9,11 +15,14 @@ import { WatchlistItem } from 'src/app/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockWatchlistComponent implements OnInit {
-  isAuth$ = this.authService.isAuthenticated();
+  @Input() isAuth: boolean;
+  @Input() user: User;
 
   watchlistItems: WatchlistItem[] = [];
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private stockDataService: StockDataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.stockDataService.getWatchlistItems().subscribe();
+  }
 }

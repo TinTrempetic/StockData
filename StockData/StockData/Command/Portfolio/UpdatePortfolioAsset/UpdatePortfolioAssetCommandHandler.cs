@@ -8,8 +8,6 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
 {
     public class UpdatePortfolioAssetCommandHandler : IRequestHandler<UpdatePortfolioAssetCommand, UpdatePortfolioAssetCommandResponse>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
         public UpdatePortfolioAssetCommandHandler(StockDataContext context)
         {
@@ -20,7 +18,7 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
         {
             var portfolioItem = await context.PortfolioItems.FirstOrDefaultAsync(p => p.Id == request.Id);
 
-            portfolioItem.Update(request.Id, userId, request.Symbol, request.DateBought, request.Quantity, request.Price);
+            portfolioItem.Update(request.Id, request.UserId, request.Symbol, request.DateBought, request.Quantity, request.Price);
 
             await context.SaveChangesAsync(cancellationToken);
 

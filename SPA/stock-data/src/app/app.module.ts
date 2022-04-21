@@ -22,13 +22,15 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EventComponent } from './components/event/event.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MarketNewsItemComponent } from './components/market-news-item/market-news-item.component';
 import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
+import { WatchlistFormComponent } from './components/watchlist-form/watchlist-form.component';
+import { WatchlistTableComponent } from './components/watchlist-table/watchlist-table.component';
 import { CompanyNewsComponent } from './containers/company-news/company-news.component';
 import { CompanyProfileComponent } from './containers/company-profile/company-profile.component';
+import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { EventsComponent } from './containers/events/events.component';
 import { HeaderComponent } from './containers/header/header.component';
 import { MarketNewsComponent } from './containers/market-news/market-news.component';
@@ -69,6 +71,8 @@ const routes: Routes = [
     CompanyNewsComponent,
     CompanyProfileComponent,
     StockDataComponent,
+    WatchlistTableComponent,
+    WatchlistFormComponent,
   ],
   imports: [
     BrowserModule,

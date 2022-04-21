@@ -6,6 +6,7 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
 {
     public class UpdatePortfolioAssetCommand : IRequest<UpdatePortfolioAssetCommandResponse>
     {
+        public string UserId { get; set; }
         public int Id {  get; set; }
         public string Symbol { get; set; }
         public DateTime DateBought { get; set; }

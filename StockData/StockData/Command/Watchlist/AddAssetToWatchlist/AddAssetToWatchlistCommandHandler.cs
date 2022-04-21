@@ -7,8 +7,6 @@ namespace StockData.Command.Watchlist.AddAssetToWatchlist
 {
     public class AddAssetToWatchlistCommandHandler : IRequestHandler<AddAssetToWatchlistCommand, int>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
         public AddAssetToWatchlistCommandHandler(StockDataContext context)
         {
@@ -17,7 +15,7 @@ namespace StockData.Command.Watchlist.AddAssetToWatchlist
 
         public async Task<int> Handle(AddAssetToWatchlistCommand request, CancellationToken cancellationToken)
         {
-            var newWatchlistItem = new Entities.WatchlistItem(userId, request.Symbol);
+            var newWatchlistItem = new Entities.WatchlistItem(request.UserId, request.Symbol);
 
             context.Add(newWatchlistItem);
 

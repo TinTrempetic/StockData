@@ -11,7 +11,7 @@ namespace StockData.Entities
         /// <summary>
         /// Id of the user
         /// </summary>
-        public Guid UserId { get; private set;  }
+        public string UserId { get; private set;  }
         /// <summary>
         /// Asset Symbol
         /// </summary>
@@ -29,7 +29,7 @@ namespace StockData.Entities
         /// </summary>
         public float Price { get; private set; }
 
-        public PortfolioItem(Guid userId, string symbol, DateTime dateBought, float quantity, float price)
+        public PortfolioItem(string userId, string symbol, DateTime dateBought, float quantity, float price)
         { 
             UserId = userId;
             Symbol = symbol;
@@ -38,7 +38,7 @@ namespace StockData.Entities
             Price = price;
         }
 
-        public void Update(int id, Guid userId, string symbol, DateTime dateBought, float quantity, float price)
+        public void Update(int id, string userId, string symbol, DateTime dateBought, float quantity, float price)
         {
             Id = id;
             UserId = userId;

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,8 +9,6 @@ namespace StockData.Query.GetPortfolio
 {
     public class GetPortfolioQueryHandler : IRequestHandler<GetPortfolioQuery, List<GetPortfolioQueryResponse>>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
 
         public GetPortfolioQueryHandler(StockDataContext context)
@@ -23,7 +20,7 @@ namespace StockData.Query.GetPortfolio
         {
             var portfolio = await context.PortfolioItems
                 .AsNoTracking()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == request.UserId)
                 .Select(x => new GetPortfolioQueryResponse
                 {
                     Id = x.Id,

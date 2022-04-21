@@ -8,7 +8,6 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
     public class AddAssetToPortfolioCommandHandler : IRequestHandler<AddAssetToPortfolioCommand, int>
     {
         // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
         public AddAssetToPortfolioCommandHandler(StockDataContext context)
         {
@@ -17,7 +16,7 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
 
         public async Task<int> Handle(AddAssetToPortfolioCommand request, CancellationToken cancellationToken)
         {
-            var newPortfolioItem = new Entities.PortfolioItem(userId, request.Symbol, request.DateBought, request.Quantity, request.Price);
+            var newPortfolioItem = new Entities.PortfolioItem(request.UserId, request.Symbol, request.DateBought, request.Quantity, request.Price);
 
             context.Add(newPortfolioItem);
 
