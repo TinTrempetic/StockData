@@ -20,9 +20,23 @@ export class StockDataService {
   }
 
   public getWatchlistItems(): Observable<any> {
-    return this.http.get<any>(endpoints.watchlist, {
+    return this.http.get<any>(endpoints.getWatchlist, {
       headers: this.getHeaders(),
     });
+  }
+
+  public addWatchlistItem(symbol: string): Observable<any> {
+    return this.http.post<any>(
+      endpoints.addItemToWatchlist,
+      { symbol, userId: this.userId },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  public removeItemFromWatchlist(id: string): Observable<any> {
+    const route = endpoints.deleteItemFromWatchlist.replace('{id}', id);
+
+    return this.http.delete<any>(route);
   }
 
   public setUser(user: User): void {

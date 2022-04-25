@@ -14,6 +14,7 @@
   (completeMethod)="getFilteredStocks($event.query)"
 >
   <ng-template let-item pTemplate="item">
+    <i class="pi pi-star" (click)="starIconClicked(item.symbol)"></i>
     <p [routerLink]="item.symbol">{{ item.label }} ({{ item.symbol }})</p>
   </ng-template>
 </p-autoComplete>

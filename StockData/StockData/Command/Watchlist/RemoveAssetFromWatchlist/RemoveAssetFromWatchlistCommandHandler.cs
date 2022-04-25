@@ -8,8 +8,6 @@ namespace StockData.Command.Watchlist.RemoveAssetFromWatchlist
 {
     public class RemoveAssetFromWatchlistCommandHandler : IRequestHandler<RemoveAssetFromWatchlistCommand, int>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
         private readonly StockDataContext context;
         public RemoveAssetFromWatchlistCommandHandler(StockDataContext context)
         {

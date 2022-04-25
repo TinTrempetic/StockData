@@ -8,6 +8,7 @@
   <div class="lookup">
     <stock-lookup
       [suggestions]="suggestions$ | async"
+      (addToWatchlist)="addStockToWatchlist($event)"
       (stockLookupChanged)="getStockSuggestions($event)"
     ></stock-lookup>
   </div>

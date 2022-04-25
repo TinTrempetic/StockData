@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { tap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication';
-import { StockDataService } from 'src/app/services/stock-data.service.ts';
 
 @Component({
   selector: 'dashboard',
@@ -12,16 +10,7 @@ import { StockDataService } from 'src/app/services/stock-data.service.ts';
 export class DashboardComponent implements OnInit {
   isAuth$ = this.authService.isAuthenticated();
 
-  userData$ = this.authService.getUserData();
+  constructor(private authService: AuthenticationService) {}
 
-  constructor(
-    private authService: AuthenticationService,
-    private stockDataService: StockDataService
-  ) {}
-
-  ngOnInit(): void {
-    this.userData$
-      .pipe(tap((user) => this.stockDataService.setUser(user)))
-      .subscribe();
-  }
+  ngOnInit(): void {}
 }

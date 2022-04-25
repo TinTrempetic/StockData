@@ -1,3 +1,5 @@
 export const endpoints = {
-  watchlist: 'http://localhost:5000/watchlist',
+  getWatchlist: 'http://localhost:5000/watchlist',
+  addItemToWatchlist: 'http://localhost:5000/watchlist',
+  deleteItemFromWatchlist: 'http://localhost:5000/watchlist/{id}',
 };

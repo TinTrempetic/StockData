@@ -20,6 +20,7 @@ export class StockLookupComponent {
   @Input() suggestions: StockLookupSelectItem[];
 
   @Output() stockLookupChanged = new EventEmitter<string>();
+  @Output() addToWatchlist = new EventEmitter<string>();
 
   public getFilteredStocks(symbol: string): void {
     this.stockLookupChanged.emit(symbol);
@@ -34,5 +35,9 @@ export class StockLookupComponent {
 
     this._clearLabelOnFocus = false;
     this.lookupText = undefined;
+  }
+
+  public starIconClicked(symbol: string): void {
+    this.addToWatchlist.emit(symbol);
   }
 }

@@ -44,4 +44,8 @@ export class HeaderComponent {
   public logout(): void {
     this.authService.logout();
   }
+
+  public addStockToWatchlist(symbol: string) {
+    this.stockDataService.addWatchlistItem(symbol).subscribe();
+  }
 }

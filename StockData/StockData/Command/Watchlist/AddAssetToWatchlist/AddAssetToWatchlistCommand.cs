@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using StockData.Enums;
 
 namespace StockData.Command.Watchlist.AddAssetToWatchlist
 {
