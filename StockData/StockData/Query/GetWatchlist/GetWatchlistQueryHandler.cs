@@ -12,7 +12,6 @@ namespace StockData.Query.GetWatchlist
 {
     public class GetWatchlistQueryHandler : IRequestHandler<GetWatchlistQuery, List<WatchlistViewModel>>
     {
-        string userId = "google-oauth2|110051772755192088405";
         private readonly StockDataContext context;
         private readonly IFinnhubService service;
 
@@ -26,7 +25,7 @@ namespace StockData.Query.GetWatchlist
         {
             var watchlist = await context.WatchlistItems
                 .AsNoTracking()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == request.UserId)
                 .Select(x => new GetWatchlistQueryResponse
                 {
                     Id = x.Id,

@@ -19,9 +19,9 @@ namespace StockData.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWatchlist()
+        public async Task<IActionResult> GetWatchlist([FromQuery] string userId)
         {
-            return Ok(await mediator.Send(new GetWatchlistQuery()));
+            return Ok(await mediator.Send(new GetWatchlistQuery { UserId = userId}));
         }
 
         [HttpPost]
