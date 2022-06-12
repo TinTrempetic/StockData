@@ -32,7 +32,9 @@ export class PriceHistoryComponent {
   private _symbol = new BehaviorSubject<string>('');
   symbol$ = this._symbol.asObservable();
 
-  private _resolution = new BehaviorSubject<string>(CandleResolution.Minute);
+  private _resolution = new BehaviorSubject<string>(
+    CandleResolution.FiveMinutes
+  );
   resolution$ = this._resolution.asObservable();
 
   data$ = combineLatest([this.symbol$, this.resolution$]).pipe(
@@ -51,7 +53,7 @@ export class PriceHistoryComponent {
   );
 
   resolutionOptions = [
-    { value: CandleResolution.Minute, label: '1 Minute' },
+    // { value: CandleResolution.Minute, label: '1 Minute' },
     { value: CandleResolution.FiveMinutes, label: '5 Minutes' },
     { value: CandleResolution.FifteenMinutes, label: '15 Minutes' },
     { value: CandleResolution.ThirtyMinutes, label: '30 Minutes' },
@@ -73,7 +75,7 @@ export class PriceHistoryComponent {
   }
 
   private buildDataForChart(input: StockCandle) {
-    const length = input.timestamp.length;
+    const length = input.timestamp?.length;
 
     let labels: string[] = [];
     let data: number[] = [];

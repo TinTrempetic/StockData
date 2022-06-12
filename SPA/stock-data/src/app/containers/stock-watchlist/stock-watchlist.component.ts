@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { combineLatest, filter, map, Subject, switchMap, tap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication';
-import { WatchlistItem } from 'src/app/types';
+import { StockDataService } from 'src/app/services/stock-data.service.ts';
 
 @Component({
   selector: 'stock-watchlist',
@@ -8,12 +9,29 @@ import { WatchlistItem } from 'src/app/types';
   styleUrls: ['./stock-watchlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StockWatchlistComponent implements OnInit {
-  isAuth$ = this.authService.isAuthenticated();
+export class StockWatchlistComponent {
+  isAuth$ = this.authService
+    .isAuthenticated()
+    .pipe(tap((x) => this._getWatchlistItemsAction.next(x)));
 
-  watchlistItems: WatchlistItem[] = [];
+  userData$ = this.authService.getUserData();
 
-  constructor(private authService: AuthenticationService) {}
+  _getWatchlistItemsAction = new Subject<boolean>();
+  getWatchlistItemsAction$ = this._getWatchlistItemsAction.asObservable();
 
-  ngOnInit(): void {}
+  watchlistItems$ = combineLatest([
+    this.getWatchlistItemsAction$,
+    this.userData$,
+  ]).pipe(
+    map(([getWatchlistItemsAction, userData]) => {
+      return { userData };
+    }),
+    filter((data) => !!data),
+    switchMap((data) => this.stockDataService.getWatchlist(data.userData.sub))
+  );
+
+  constructor(
+    private authService: AuthenticationService,
+    private stockDataService: StockDataService
+  ) {}
 }

@@ -1,4 +1,4 @@
-<p-table [value]="watchlistItems" class="watchlist-table">
+<p-table [value]="watchlistItems$ | async" class="watchlist-table">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="symbol">
@@ -24,7 +24,7 @@
   <ng-template pTemplate="body" let-item>
     <tr>
       <td>{{ item.symbol }}</td>
-      <td>{{ item.price }}</td>
+      <td>{{ item.currentPrice }}</td>
       <td>{{ item.percentChange }}</td>
       <td>{{ item.dayHighPrice }}</td>
       <td>{{ item.dayLowPrice }}</td>
