@@ -1,3 +1,12 @@
+<div class="search">
+  <stock-lookup
+    placeholder="Add stock to watchlist"
+    [suggestions]="suggestions$ | async"
+    (stockLookupChanged)="getStockSuggestions($event)"
+    (stockSelected)="addToWatchlist($event)"
+  ></stock-lookup>
+</div>
+
 <p-table
   [value]="watchlistItems$ | async"
   [lazy]="true"

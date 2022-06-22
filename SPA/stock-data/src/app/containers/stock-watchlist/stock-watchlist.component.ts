@@ -9,9 +9,14 @@ import {
   take,
   tap,
 } from 'rxjs';
+import { FinnhubService } from 'src/app/services';
 import { AuthenticationService } from 'src/app/services/authentication';
 import { StockDataService } from 'src/app/services/stock-data.service.ts';
-import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
+import {
+  LazyLoadTableData,
+  StockLookupSelectItem,
+  WatchlistItem,
+} from 'src/app/types';
 
 @Component({
   selector: 'stock-watchlist',
@@ -20,8 +25,14 @@ import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockWatchlistComponent implements OnInit {
+  totalRows: number;
+  private userId: string;
+
   isAuth$ = this.authService.isAuthenticated();
   userData$ = this.authService.getUserData();
+
+  private _suggestions = new Subject<StockLookupSelectItem[]>();
+  suggestions$ = this._suggestions.asObservable();
 
   private _watchlistItems = new Subject<WatchlistItem[]>();
   watchlistItems$ = this._watchlistItems.asObservable();
@@ -35,11 +46,10 @@ export class StockWatchlistComponent implements OnInit {
   private _loading = new BehaviorSubject<boolean>(false);
   loading$ = this._loading.asObservable();
 
-  totalRows: number;
-
   constructor(
     private authService: AuthenticationService,
-    private stockDataService: StockDataService
+    private stockDataService: StockDataService,
+    private finnhubService: FinnhubService
   ) {}
 
   ngOnInit(): void {
@@ -49,9 +59,12 @@ export class StockWatchlistComponent implements OnInit {
           return { userData, tableData };
         }),
         filter((data) => !!data.userData && !!data.tableData),
-        tap(() => this._loading.next(true)),
+        tap((data) => {
+          this.userId = data.userData.sub;
+          this._loading.next(true);
+        }),
         switchMap((data) =>
-          this.stockDataService.getWatchlist(data.userData.sub, data.tableData)
+          this.stockDataService.getWatchlist(this.userId, data.tableData)
         ),
         tap((response) => {
           this.totalRows = response.totalRows;
@@ -88,5 +101,26 @@ export class StockWatchlistComponent implements OnInit {
         tap(() => this._reloadDataAction.next())
       )
       .subscribe();
+  }
+
+  public addToWatchlist(symbol: string): void {
+    this.stockDataService
+      .addItem(this.userId, symbol)
+      .pipe(
+        take(1),
+        tap(() => this._reloadDataAction.next())
+      )
+      .subscribe();
+  }
+
+  public getStockSuggestions(symbol: string): void {
+    this.finnhubService
+      .stockLookup(symbol)
+      .pipe(tap((result) => this.updateSuggestions(result)))
+      .subscribe();
+  }
+
+  private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
+    this._suggestions.next(suggestions);
   }
 }

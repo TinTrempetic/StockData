@@ -8,6 +8,7 @@
   <div class="lookup">
     <stock-lookup
       [suggestions]="suggestions$ | async"
+      placeholder="Search for a stock symbol"
       (stockLookupChanged)="getStockSuggestions($event)"
     ></stock-lookup>
   </div>

@@ -19,7 +19,11 @@ export class StockLookupComponent {
 
   @Input() suggestions: StockLookupSelectItem[];
 
+  @Input() placeholder: string;
+
   @Output() stockLookupChanged = new EventEmitter<string>();
+
+  @Output() stockSelected = new EventEmitter<string>();
 
   public getFilteredStocks(symbol: string): void {
     this.stockLookupChanged.emit(symbol);
@@ -27,6 +31,8 @@ export class StockLookupComponent {
 
   public suggestionSelected(event: any): void {
     this._clearLabelOnFocus = true;
+
+    this.stockSelected.emit(event.symbol);
   }
 
   public clearLabel(): void {
