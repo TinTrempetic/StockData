@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import {
   BehaviorSubject,
   combineLatest,
@@ -49,7 +50,8 @@ export class StockWatchlistComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private stockDataService: StockDataService,
-    private finnhubService: FinnhubService
+    private finnhubService: FinnhubService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -108,6 +110,15 @@ export class StockWatchlistComponent implements OnInit {
       .addItem(this.userId, symbol)
       .pipe(
         take(1),
+        tap((response) => {
+          if (!response)
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Item is already in the watchlist',
+            });
+        }),
+        filter((data) => data),
         tap(() => this._reloadDataAction.next())
       )
       .subscribe();

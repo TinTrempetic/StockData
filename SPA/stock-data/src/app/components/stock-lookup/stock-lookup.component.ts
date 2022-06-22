@@ -21,6 +21,8 @@ export class StockLookupComponent {
 
   @Input() placeholder: string;
 
+  @Input() changeRouteOnSelect: boolean;
+
   @Output() stockLookupChanged = new EventEmitter<string>();
 
   @Output() stockSelected = new EventEmitter<string>();

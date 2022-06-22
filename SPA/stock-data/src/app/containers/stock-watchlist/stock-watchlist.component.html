@@ -1,7 +1,8 @@
-<div class="search">
+<div class="lookup">
   <stock-lookup
     placeholder="Add stock to watchlist"
     [suggestions]="suggestions$ | async"
+    [changeRouteOnSelect]="false"
     (stockLookupChanged)="getStockSuggestions($event)"
     (stockSelected)="addToWatchlist($event)"
   ></stock-lookup>

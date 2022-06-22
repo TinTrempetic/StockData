@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
+import { MessageService } from 'primeng/api';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
@@ -18,6 +19,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -92,9 +94,10 @@ const routes: Routes = [
     PanelModule,
     CardModule,
     ChartModule,
+    ToastModule,
     RouterModule.forRoot(routes),
   ],
   bootstrap: [AppComponent],
-  providers: [DatePipe],
+  providers: [DatePipe, MessageService],
 })
 export class AppModule {}
