@@ -8,8 +8,7 @@ namespace StockData.Command.Portfolio.UpdatePortfolioAsset
 {
     public class UpdatePortfolioAssetCommandHandler : IRequestHandler<UpdatePortfolioAssetCommand, UpdatePortfolioAssetCommandResponse>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
+        string userId = "google-oauth2|110051772755192088405";
         private readonly StockDataContext context;
         public UpdatePortfolioAssetCommandHandler(StockDataContext context)
         {

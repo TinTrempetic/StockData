@@ -19,6 +19,10 @@ body {
   }
 }
 
+p-autocomplete li {
+  width: 100% !important;
+}
+
 .full-width {
   width: 100%;
 }
@@ -58,7 +62,7 @@ p-dropdownitem li {
 .watchlist-table tbody,
 .portfolio-table tbody {
   width: 100%;
-  height: calc(100vh - 250px);
+  max-height: calc(100vh - 300px);
 }
 
 li p {
@@ -68,4 +72,8 @@ li p {
   padding-block-end: 1em;
   padding-inline-start: 0px;
   padding-inline-end: 0px;
+}
+
+.table-row {
+  height: 100px;
 }

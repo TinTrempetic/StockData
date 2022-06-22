@@ -8,6 +8,8 @@
   <div class="lookup">
     <stock-lookup
       [suggestions]="suggestions$ | async"
+      [changeRouteOnSelect]="true"
+      placeholder="Search for a stock symbol"
       (stockLookupChanged)="getStockSuggestions($event)"
     ></stock-lookup>
   </div>

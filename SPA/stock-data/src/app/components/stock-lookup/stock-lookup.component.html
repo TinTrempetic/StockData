@@ -2,7 +2,7 @@
   [(ngModel)]="lookupText"
   styleClass="full-width"
   inputStyleClass="full-width"
-  placeholder="Search for a stock symbol"
+  [placeholder]="placeholder"
   emptyMessage="No stocks found"
   [delay]="500"
   [showEmptyMessage]="true"
@@ -14,6 +14,13 @@
   (completeMethod)="getFilteredStocks($event.query)"
 >
   <ng-template let-item pTemplate="item">
-    <p [routerLink]="item.symbol">{{ item.label }} ({{ item.symbol }})</p>
+    <ng-container *ngIf="changeRouteOnSelect; else elseTemplate">
+      <p [routerLink]="item.symbol">
+        {{ item.label }} ({{ item.symbol }})
+      </p></ng-container
+    >
+    <ng-template #elseTemplate
+      ><p>{{ item.label }} ({{ item.symbol }})</p></ng-template
+    >
   </ng-template>
 </p-autoComplete>

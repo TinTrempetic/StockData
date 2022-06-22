@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using StockData.Command.ViewModels;
+using StockData.Enums;
+using StockData.Query.GetStockQuote;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +30,24 @@ namespace StockData.Services.FinnhubService
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
             return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public async Task<WatchlistViewModel> GetStockQuote(int id, string symbol, CancellationToken cancellationToken)
+        {
+            var route = FinnhubEndpoints.StockQuote.Replace("{0}", symbol);
+
+            var response = await SendRequestToFinnhub<GetStockQuoteQueryResponse>(route, HttpMethod.Get, cancellationToken);
+
+            return new WatchlistViewModel
+            {
+                Id = id,
+                Symbol = symbol,
+                CurrentPrice = response.CurrentPrice,
+                Change = response.Change,
+                PercentChange = response.PercentChange,
+                DayHighPrice = response.HighPrice,
+                DayLowPrice = response.LowPrice
+            };
         }
     }
 }

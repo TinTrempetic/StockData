@@ -11,19 +11,19 @@ namespace StockData.Entities
         /// <summary>
         /// Id of the user
         /// </summary>
-        public Guid UserId { get; private set; }
+        public string UserId { get; private set; }
         /// <summary>
         /// Asset Symbol
         /// </summary>
         public string Symbol { get; private set; }
 
-        public WatchlistItem(Guid userId, string symbol)
+        public WatchlistItem(string userId, string symbol)
         {
             UserId = userId;
             Symbol = symbol;
         }
 
-        public void Update(int id, Guid userId, string symbol)
+        public void Update(int id, string userId, string symbol)
         {
             Id = id;
             UserId = userId;

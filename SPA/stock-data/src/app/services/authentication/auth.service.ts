@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,8 @@ export class AuthenticationService {
     @Inject(DOCUMENT) private doc: Document
   ) {}
 
+  userId: string;
+
   login(): void {
     this.auth.loginWithRedirect();
   }
@@ -21,7 +23,7 @@ export class AuthenticationService {
   }
 
   public getUserData(): Observable<User> {
-    return this.auth.user$;
+    return this.auth.user$.pipe(tap((x) => (this.userId = x?.sub)));
   }
 
   public isAuthenticated(): Observable<boolean> {

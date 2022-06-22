@@ -1,34 +1,54 @@
-<p-table [value]="watchlistItems" class="watchlist-table">
+<div class="lookup">
+  <stock-lookup
+    placeholder="Add stock to watchlist"
+    [suggestions]="suggestions$ | async"
+    [changeRouteOnSelect]="false"
+    (stockLookupChanged)="getStockSuggestions($event)"
+    (stockSelected)="addToWatchlist($event)"
+  ></stock-lookup>
+</div>
+
+<p-table
+  [value]="watchlistItems$ | async"
+  [lazy]="true"
+  [totalRecords]="totalRows"
+  [rows]="5"
+  [paginator]="true"
+  [loading]="loading$ | async"
+  (onLazyLoad)="loadItems($event)"
+  class="watchlist-table"
+>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="symbol">
         Symbol <p-sortIcon field="symbol"></p-sortIcon>
       </th>
-      <th pSortableColumn="price">
-        Price <p-sortIcon field="price"></p-sortIcon>
-      </th>
-      <th pSortableColumn="percentChange">
-        Change <p-sortIcon field="percentChange"></p-sortIcon>
-      </th>
-      <th pSortableColumn="dayHighPrice">
-        DayHighPrice <p-sortIcon field="dayHighPrice"></p-sortIcon>
-      </th>
-      <th pSortableColumn="dayLowPrice">
-        DayLowPrice <p-sortIcon field="dayLowPrice"></p-sortIcon>
-      </th>
-      <th pSortableColumn="actions">
-        Actions <p-sortIcon field="actions"></p-sortIcon>
-      </th>
+      <th>Price</th>
+      <th>Change</th>
+      <th>DayHighPrice</th>
+      <th>DayLowPrice</th>
+      <th>Actions</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
-    <tr>
+    <tr class="table-row">
       <td>{{ item.symbol }}</td>
-      <td>{{ item.price }}</td>
-      <td>{{ item.percentChange }}</td>
+      <td>{{ item.currentPrice }}</td>
+      <td [class]="getChangeColor(item.percentChange)">
+        {{ item.percentChange }} %
+      </td>
       <td>{{ item.dayHighPrice }}</td>
       <td>{{ item.dayLowPrice }}</td>
-      <td>Actions for id: {{ item.id }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Remove"
+          class="p-button-rounded p-button-danger"
+          (click)="deleteItem(item.id)"
+        ></button>
+      </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">

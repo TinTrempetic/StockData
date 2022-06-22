@@ -18,22 +18,22 @@ namespace StockData.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWatchlist()
+        [HttpPost]
+        public async Task<IActionResult> GetWatchlist([FromBody] GetWatchlistQuery query)
         {
-            return Ok(await mediator.Send(new GetWatchlistQuery()));
+            return Ok(await mediator.Send(query));
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> AddAssetToWatchlist([FromBody] AddAssetToWatchlistCommand command)
         {
             return Ok(await mediator.Send(command));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveAssetFromWatchlist([FromBody] RemoveAssetFromWatchlistCommand command)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> RemoveAssetFromWatchlist([FromRoute] int Id)
         {
-            return Ok(await mediator.Send(command));
+            return Ok(await mediator.Send(new RemoveAssetFromWatchlistCommand { Id = Id}));
         }
     }
 }

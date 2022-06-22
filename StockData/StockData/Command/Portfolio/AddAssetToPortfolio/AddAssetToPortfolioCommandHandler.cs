@@ -7,8 +7,7 @@ namespace StockData.Command.Portfolio.AddAssetToPortfolio
 {
     public class AddAssetToPortfolioCommandHandler : IRequestHandler<AddAssetToPortfolioCommand, int>
     {
-        // TODO: Replace with IdentityUser
-        Guid userId = Guid.Empty;
+        string userId = "google-oauth2|110051772755192088405";
         private readonly StockDataContext context;
         public AddAssetToPortfolioCommandHandler(StockDataContext context)
         {
