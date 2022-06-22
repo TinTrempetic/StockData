@@ -32,7 +32,7 @@ namespace StockData.Services.FinnhubService
             return JsonConvert.DeserializeObject<T>(content);
         }
 
-        public async Task<WatchlistViewModel> GetStockQuote(string symbol, CancellationToken cancellationToken)
+        public async Task<WatchlistViewModel> GetStockQuote(int id, string symbol, CancellationToken cancellationToken)
         {
             var route = FinnhubEndpoints.StockQuote.Replace("{0}", symbol);
 
@@ -40,6 +40,7 @@ namespace StockData.Services.FinnhubService
 
             return new WatchlistViewModel
             {
+                Id = id,
                 Symbol = symbol,
                 CurrentPrice = response.CurrentPrice,
                 Change = response.Change,

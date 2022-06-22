@@ -23,7 +23,7 @@ export class AuthenticationService {
   }
 
   public getUserData(): Observable<User> {
-    return this.auth.user$.pipe(tap((x) => (this.userId = x.sub)));
+    return this.auth.user$.pipe(tap((x) => (this.userId = x?.sub)));
   }
 
   public isAuthenticated(): Observable<boolean> {

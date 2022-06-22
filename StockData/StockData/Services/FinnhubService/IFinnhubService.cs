@@ -9,6 +9,6 @@ namespace StockData.Services.FinnhubService
     {
         Task<T> SendRequestToFinnhub<T>(string route, HttpMethod httpMethod, CancellationToken cancellationToken);
 
-        Task<WatchlistViewModel> GetStockQuote(string symbol, CancellationToken cancellationToken);
+        Task<WatchlistViewModel> GetStockQuote(int id, string symbol, CancellationToken cancellationToken);
     }
 }

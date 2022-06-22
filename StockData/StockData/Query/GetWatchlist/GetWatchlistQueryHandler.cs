@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
@@ -7,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using StockData.Services.FinnhubService;
 using StockData.Command.ViewModels;
+using StockData.Extensions;
+using StockData.Models;
 
 namespace StockData.Query.GetWatchlist
 {
-    public class GetWatchlistQueryHandler : IRequestHandler<GetWatchlistQuery, List<WatchlistViewModel>>
+    public class GetWatchlistQueryHandler : IRequestHandler<GetWatchlistQuery, PagedResult<WatchlistViewModel>>
     {
         private readonly StockDataContext context;
         private readonly IFinnhubService service;
@@ -21,9 +22,14 @@ namespace StockData.Query.GetWatchlist
             this.service = service;
         }
 
-        public async Task<List<WatchlistViewModel>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<WatchlistViewModel>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
         {
-            var watchlist = await context.WatchlistItems
+            //var pageCount = (double)result.RowCount / pageSize;
+
+            var watchlist = new PagedResult<GetWatchlistQueryResponse>();
+
+            if(request.SortOrder.Equals(1))
+                watchlist = await context.WatchlistItems
                 .AsNoTracking()
                 .Where(x => x.UserId == request.UserId)
                 .Select(x => new GetWatchlistQueryResponse
@@ -31,13 +37,25 @@ namespace StockData.Query.GetWatchlist
                     Id = x.Id,
                     Symbol = x.Symbol
                 })
-                .ToListAsync(cancellationToken);
+                .OrderByDescending(x => x.Symbol)
+                .GetPagedAsync(request.Page, request.PageSize, cancellationToken);
+            else
+                watchlist = await context.WatchlistItems
+                .AsNoTracking()
+                .Where(x => x.UserId == request.UserId)
+                .Select(x => new GetWatchlistQueryResponse
+                {
+                    Id = x.Id,
+                    Symbol = x.Symbol
+                })
+                .OrderBy(x => x.Symbol)
+                .GetPagedAsync(request.Page, request.PageSize, cancellationToken);
 
             var tasks = new List<Task<WatchlistViewModel>>();
 
-            foreach (var item in watchlist)
+            foreach (var item in watchlist.Results)
             {
-                var task = service.GetStockQuote(item.Symbol, cancellationToken);
+                var task = service.GetStockQuote(item.Id, item.Symbol, cancellationToken);
 
                 tasks.Add(task);
             }
@@ -51,7 +69,16 @@ namespace StockData.Query.GetWatchlist
                 response.Add(resolvedTask.Result);
             }
 
-            return response;
+            var pagedResponse = new PagedResult<WatchlistViewModel>
+            {
+                CurrentPage = watchlist.CurrentPage,
+                PageCount = watchlist.PageCount,
+                PageSize = watchlist.PageSize,
+                TotalRows = watchlist.TotalRows,
+                Results = response
+            };
+
+            return pagedResponse;
         }
     }
 }

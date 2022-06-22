@@ -1,4 +1,5 @@
 export const endpoints = {
   watchlist: 'http://localhost:5000/watchlist',
+  addToWatchlist: 'http://localhost:5000/watchlist/add',
   portfolio: 'http://localhost:5000/portfolio',
 };

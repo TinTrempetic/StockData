@@ -2,6 +2,7 @@
 {
     public class WatchlistViewModel
     {
+        public int Id { get; set; }
         public string Symbol { get; set; }
         public float CurrentPrice { get; set; }
         public float Change { get; set; }

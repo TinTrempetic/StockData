@@ -18,13 +18,13 @@ namespace StockData.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWatchlist([FromQuery] string userId)
+        [HttpPost]
+        public async Task<IActionResult> GetWatchlist([FromBody] GetWatchlistQuery query)
         {
-            return Ok(await mediator.Send(new GetWatchlistQuery { UserId = userId}));
+            return Ok(await mediator.Send(query));
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> AddAssetToWatchlist([FromBody] AddAssetToWatchlistCommand command)
         {
             return Ok(await mediator.Send(command));

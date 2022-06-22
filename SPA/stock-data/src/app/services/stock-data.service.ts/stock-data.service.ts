@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { WatchlistItem } from 'src/app/types';
+import { LazyLoadTableData, PagedResult, WatchlistItem } from 'src/app/types';
 import { AuthenticationService } from '../authentication';
 import { endpoints } from './stock-data.endpoints';
 
@@ -23,13 +23,15 @@ export class StockDataService {
     this._backButtonVisible.next(isVisible);
   }
 
-  public getWatchlist(userId: string): Observable<WatchlistItem[]> {
+  public getWatchlist(
+    userId: string,
+    tableData: LazyLoadTableData
+  ): Observable<PagedResult<WatchlistItem>> {
     const route = endpoints.watchlist;
 
-    return this.http.get<WatchlistItem[]>(route, {
-      params: {
-        userId,
-      },
+    return this.http.post<PagedResult<WatchlistItem>>(route, {
+      userId,
+      ...tableData,
     });
 
     // return response.pipe(
