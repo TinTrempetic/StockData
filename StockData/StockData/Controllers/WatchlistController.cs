@@ -30,10 +30,10 @@ namespace StockData.Controllers
             return Ok(await mediator.Send(command));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveAssetFromWatchlist([FromBody] RemoveAssetFromWatchlistCommand command)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> RemoveAssetFromWatchlist([FromRoute] int Id)
         {
-            return Ok(await mediator.Send(command));
+            return Ok(await mediator.Send(new RemoveAssetFromWatchlistCommand { Id = Id}));
         }
     }
 }

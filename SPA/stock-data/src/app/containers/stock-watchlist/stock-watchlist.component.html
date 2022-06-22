@@ -4,6 +4,7 @@
   [totalRecords]="totalRows"
   [rows]="5"
   [paginator]="true"
+  [loading]="loading$ | async"
   (onLazyLoad)="loadItems($event)"
   class="watchlist-table"
 >
@@ -28,7 +29,16 @@
       </td>
       <td>{{ item.dayHighPrice }}</td>
       <td>{{ item.dayLowPrice }}</td>
-      <td>Actions for id: {{ item.id }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Remove"
+          class="p-button-rounded p-button-danger"
+          (click)="deleteItem(item.id)"
+        ></button>
+      </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">

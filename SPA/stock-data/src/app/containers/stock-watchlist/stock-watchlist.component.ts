@@ -1,5 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { combineLatest, filter, map, Subject, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  Subject,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication';
 import { StockDataService } from 'src/app/services/stock-data.service.ts';
 import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
@@ -20,6 +29,12 @@ export class StockWatchlistComponent implements OnInit {
   private _tableData = new Subject<LazyLoadTableData>();
   tableData$ = this._tableData.asObservable();
 
+  private _reloadDataAction = new BehaviorSubject<void>(null);
+  reloadDataAction$ = this._reloadDataAction.asObservable();
+
+  private _loading = new BehaviorSubject<boolean>(false);
+  loading$ = this._loading.asObservable();
+
   totalRows: number;
 
   constructor(
@@ -28,18 +43,21 @@ export class StockWatchlistComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.userData$, this.tableData$])
+    combineLatest([this.userData$, this.tableData$, this.reloadDataAction$])
       .pipe(
         map(([userData, tableData]) => {
           return { userData, tableData };
         }),
         filter((data) => !!data.userData && !!data.tableData),
+        tap(() => this._loading.next(true)),
         switchMap((data) =>
           this.stockDataService.getWatchlist(data.userData.sub, data.tableData)
         ),
         tap((response) => {
           this.totalRows = response.totalRows;
           this._watchlistItems.next(response.results);
+
+          this._loading.next(false);
         })
       )
       .subscribe();
@@ -56,9 +74,19 @@ export class StockWatchlistComponent implements OnInit {
     this._tableData.next(data);
   }
 
-  getChangeColor(change: number): string {
+  public getChangeColor(change: number): string {
     if (change > 0) return 'green';
 
     return 'red';
+  }
+
+  public deleteItem(id: number): void {
+    this.stockDataService
+      .deleteItem(id)
+      .pipe(
+        take(1),
+        tap(() => this._reloadDataAction.next())
+      )
+      .subscribe();
   }
 }

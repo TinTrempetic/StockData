@@ -27,26 +27,17 @@ export class StockDataService {
     userId: string,
     tableData: LazyLoadTableData
   ): Observable<PagedResult<WatchlistItem>> {
-    const route = endpoints.watchlist;
+    const route = endpoints.getWatchlist;
 
     return this.http.post<PagedResult<WatchlistItem>>(route, {
       userId,
       ...tableData,
     });
+  }
 
-    // return response.pipe(
-    //   map((response: WatchlistItem) => {
-    //     const results = response.result?.filter(
-    //       (x) => !x.symbol.includes('.')
-    //     );
+  public deleteItem(id: number): Observable<void> {
+    const route = endpoints.removeFromWatchlist.concat(`/${id}`);
 
-    //     return results.map((result) => {
-    //       return {
-    //         label: result.description,
-    //         symbol: result.symbol,
-    //       } as StockLookupSelectItem;
-    //     });
-    //   })
-    // );
+    return this.http.delete<void>(route);
   }
 }

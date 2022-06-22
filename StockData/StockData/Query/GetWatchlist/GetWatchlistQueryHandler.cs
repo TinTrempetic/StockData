@@ -24,8 +24,6 @@ namespace StockData.Query.GetWatchlist
 
         public async Task<PagedResult<WatchlistViewModel>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
         {
-            //var pageCount = (double)result.RowCount / pageSize;
-
             var watchlist = new PagedResult<GetWatchlistQueryResponse>();
 
             if(request.SortOrder.Equals(1))
