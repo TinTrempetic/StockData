@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Subject, tap } from 'rxjs';
-import { FinnhubService } from 'src/app/services';
+import { Subject } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication';
 import { StockDataService } from 'src/app/services/stock-data.service.ts';
 import { StockLookupSelectItem } from 'src/app/types';
@@ -21,21 +20,9 @@ export class HeaderComponent {
   backButtonVisible$ = this.stockDataService.backButtonVisible$;
 
   constructor(
-    private finnhubService: FinnhubService,
     private authService: AuthenticationService,
     private stockDataService: StockDataService
   ) {}
-
-  public getStockSuggestions(symbol: string): void {
-    this.finnhubService
-      .stockLookup(symbol)
-      .pipe(tap((result) => this.updateSuggestions(result)))
-      .subscribe();
-  }
-
-  private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
-    this._suggestions.next(suggestions);
-  }
 
   public login(): void {
     this.authService.login();

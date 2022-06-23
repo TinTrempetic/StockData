@@ -1,3 +1,11 @@
+<div class="lookup">
+  <stock-lookup
+    placeholder="Add stock to watchlist"
+    [changeRouteOnSelect]="false"
+    (stockSelected)="openPortfolioDialog($event)"
+  ></stock-lookup>
+</div>
+
 <p-table [value]="portfolioItems" class="portfolio-table">
   <ng-template pTemplate="header">
     <tr>

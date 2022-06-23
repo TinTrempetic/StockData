@@ -18,7 +18,6 @@ export class StockPortfolioComponent implements OnInit {
   ngOnInit(): void {}
 
   /**
-   * TODO: Move this to service and add 'priceChange' property to PortfolioItem interface
    * If the price increased, use the formula [(New Price - Old Price)/Old Price] and then multiply that number by 100.
    * If the price decreased, use the formula [(Old Price - New Price)/Old Price] and multiply that number by 100.
    */
@@ -36,5 +35,9 @@ export class StockPortfolioComponent implements OnInit {
     }
 
     return '0%';
+  }
+
+  public openPortfolioDialog(symbol: string): void {
+    console.log(symbol);
   }
 }

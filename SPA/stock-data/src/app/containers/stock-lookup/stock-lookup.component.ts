@@ -5,6 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { Subject, tap } from 'rxjs';
+import { FinnhubService } from 'src/app/services';
 import { StockLookupSelectItem } from 'src/app/types';
 
 @Component({
@@ -17,19 +19,16 @@ export class StockLookupComponent {
   private _clearLabelOnFocus: boolean;
   lookupText: string;
 
-  @Input() suggestions: StockLookupSelectItem[];
+  private _suggestions = new Subject<StockLookupSelectItem[]>();
+  suggestions$ = this._suggestions.asObservable();
 
   @Input() placeholder: string;
 
   @Input() changeRouteOnSelect: boolean;
 
-  @Output() stockLookupChanged = new EventEmitter<string>();
-
   @Output() stockSelected = new EventEmitter<string>();
 
-  public getFilteredStocks(symbol: string): void {
-    this.stockLookupChanged.emit(symbol);
-  }
+  constructor(private finnhubService: FinnhubService) {}
 
   public suggestionSelected(event: any): void {
     this._clearLabelOnFocus = true;
@@ -42,5 +41,16 @@ export class StockLookupComponent {
 
     this._clearLabelOnFocus = false;
     this.lookupText = undefined;
+  }
+
+  public getStockSuggestions(symbol: string): void {
+    this.finnhubService
+      .stockLookup(symbol)
+      .pipe(tap((result) => this.updateSuggestions(result)))
+      .subscribe();
+  }
+
+  private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
+    this._suggestions.next(suggestions);
   }
 }

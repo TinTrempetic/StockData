@@ -23,7 +23,10 @@ export class StockDataService {
     this._backButtonVisible.next(isVisible);
   }
 
-  public addItem(userId: string, symbol: string): Observable<boolean> {
+  public addItemToWatchlist(
+    userId: string,
+    symbol: string
+  ): Observable<boolean> {
     const route = endpoints.addToWatchlist;
 
     return this.http.post<boolean>(route, {

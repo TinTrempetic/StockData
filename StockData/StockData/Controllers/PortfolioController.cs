@@ -19,13 +19,13 @@ namespace StockData.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetPortfolio()
         {
             return Ok(await mediator.Send(new GetPortfolioQuery()));
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> AddAssetToPortfolio([FromBody] AddAssetToPortfolioCommand command)
         {
             return Ok(await mediator.Send(command));
