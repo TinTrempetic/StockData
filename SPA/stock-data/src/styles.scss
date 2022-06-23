@@ -9,9 +9,9 @@ body {
   padding: 10px;
 }
 
-// Used for making the <li> element width 25%
+// Used for making the <li> element width 33.3%
 .p-tabview li {
-  width: 25%;
+  width: calc(100% / 3);
 
   // Used to center the <a> element inside of the <li>
   a {

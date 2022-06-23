@@ -5,6 +5,5 @@ export * from './ipo-calendar.type';
 export * from './lazy-load-table-data.type';
 export * from './market-news.type';
 export * from './paginated-result.type';
-export * from './portfolio-item.type';
 export * from './stock-lookup.type';
 export * from './watchlist-item.type';

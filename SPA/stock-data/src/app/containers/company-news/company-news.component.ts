@@ -17,6 +17,7 @@ export class CompanyNewsComponent {
   }
 
   _data = new BehaviorSubject<string>(undefined);
+
   news$ = this._data.asObservable().pipe(
     filter((x) => !!x?.length),
     switchMap((symbol) => this.getCompanyNewsData(symbol))

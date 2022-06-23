@@ -17,6 +17,7 @@ export class CompanyProfileComponent {
   }
 
   _data = new BehaviorSubject<string>(undefined);
+
   data$ = this._data.asObservable().pipe(
     filter((x) => !!x?.length),
     switchMap((symbol) => this.getCompanyData(symbol))

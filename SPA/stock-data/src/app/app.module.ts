@@ -37,7 +37,6 @@ import { MarketNewsComponent } from './containers/market-news/market-news.compon
 import { PriceHistoryComponent } from './containers/price-history/price-history.component';
 import { RecommendationTrendsComponent } from './containers/recommendation-trends/recommendation-trends.component';
 import { StockDataComponent } from './containers/stock-data/stock-data.component';
-import { StockPortfolioComponent } from './containers/stock-portfolio/stock-portfolio.component';
 import { StockWatchlistComponent } from './containers/stock-watchlist/stock-watchlist.component';
 
 const routes: Routes = [
@@ -59,7 +58,6 @@ const routes: Routes = [
     LayoutComponent,
     HeaderComponent,
     DashboardComponent,
-    StockPortfolioComponent,
     StockWatchlistComponent,
     MarketNewsComponent,
     EventComponent,
