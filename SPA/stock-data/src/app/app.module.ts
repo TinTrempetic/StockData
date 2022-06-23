@@ -28,7 +28,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EventComponent } from './components/event/event.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MarketNewsItemComponent } from './components/market-news-item/market-news-item.component';
-import { StockLookupComponent } from './components/stock-lookup/stock-lookup.component';
 import { CompanyNewsComponent } from './containers/company-news/company-news.component';
 import { CompanyProfileComponent } from './containers/company-profile/company-profile.component';
 import { EventsComponent } from './containers/events/events.component';
@@ -37,6 +36,7 @@ import { MarketNewsComponent } from './containers/market-news/market-news.compon
 import { PriceHistoryComponent } from './containers/price-history/price-history.component';
 import { RecommendationTrendsComponent } from './containers/recommendation-trends/recommendation-trends.component';
 import { StockDataComponent } from './containers/stock-data/stock-data.component';
+import { StockLookupComponent } from './containers/stock-lookup/stock-lookup.component';
 import { StockWatchlistComponent } from './containers/stock-watchlist/stock-watchlist.component';
 
 const routes: Routes = [

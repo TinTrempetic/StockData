@@ -6,12 +6,12 @@
   emptyMessage="No stocks found"
   [delay]="500"
   [showEmptyMessage]="true"
-  [suggestions]="suggestions"
+  [suggestions]="suggestions$ | async"
   [minLength]="1"
   [multiple]="false"
   (onSelect)="suggestionSelected($event)"
   (onFocus)="clearLabel()"
-  (completeMethod)="getFilteredStocks($event.query)"
+  (completeMethod)="getStockSuggestions($event.query)"
 >
   <ng-template let-item pTemplate="item">
     <ng-container *ngIf="changeRouteOnSelect; else elseTemplate">
