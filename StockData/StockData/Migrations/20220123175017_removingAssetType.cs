@@ -9,10 +9,6 @@ namespace StockData.Migrations
             migrationBuilder.DropColumn(
                 name: "AssetType",
                 table: "WatchlistItems");
-
-            migrationBuilder.DropColumn(
-                name: "AssetType",
-                table: "PortfolioItems");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -20,13 +16,6 @@ namespace StockData.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "AssetType",
                 table: "WatchlistItems",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "AssetType",
-                table: "PortfolioItems",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
