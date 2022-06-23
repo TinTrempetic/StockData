@@ -53,7 +53,6 @@ export class PriceHistoryComponent {
   );
 
   resolutionOptions = [
-    // { value: CandleResolution.Minute, label: '1 Minute' },
     { value: CandleResolution.FiveMinutes, label: '5 Minutes' },
     { value: CandleResolution.FifteenMinutes, label: '15 Minutes' },
     { value: CandleResolution.ThirtyMinutes, label: '30 Minutes' },

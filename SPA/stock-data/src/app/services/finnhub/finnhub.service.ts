@@ -22,10 +22,8 @@ import { endpoints } from './finnhub.endpoints';
   providedIn: 'root',
 })
 export class FinnhubService {
-  // TODO: get this from database
   private apiKey = 'c7bfc4qad3ia366ft1k0';
 
-  // TODO: move datePipe to utilities
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
   public stockLookup(symbol: string): Observable<StockLookupSelectItem[]> {

@@ -10,14 +10,9 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { FinnhubService } from 'src/app/services';
 import { AuthenticationService } from 'src/app/services/authentication';
 import { StockDataService } from 'src/app/services/stock-data.service.ts';
-import {
-  LazyLoadTableData,
-  StockLookupSelectItem,
-  WatchlistItem,
-} from 'src/app/types';
+import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
 
 @Component({
   selector: 'stock-watchlist',
@@ -31,9 +26,6 @@ export class StockWatchlistComponent implements OnInit {
 
   isAuth$ = this.authService.isAuthenticated();
   userData$ = this.authService.getUserData();
-
-  private _suggestions = new Subject<StockLookupSelectItem[]>();
-  suggestions$ = this._suggestions.asObservable();
 
   private _watchlistItems = new Subject<WatchlistItem[]>();
   watchlistItems$ = this._watchlistItems.asObservable();
@@ -50,7 +42,6 @@ export class StockWatchlistComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private stockDataService: StockDataService,
-    private finnhubService: FinnhubService,
     private messageService: MessageService
   ) {}
 
@@ -122,16 +113,5 @@ export class StockWatchlistComponent implements OnInit {
         tap(() => this._reloadDataAction.next())
       )
       .subscribe();
-  }
-
-  public getStockSuggestions(symbol: string): void {
-    this.finnhubService
-      .stockLookup(symbol)
-      .pipe(tap((result) => this.updateSuggestions(result)))
-      .subscribe();
-  }
-
-  private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
-    this._suggestions.next(suggestions);
   }
 }

@@ -7,7 +7,6 @@ namespace StockData
 {
     public class StockDataContext : DbContext
     {
-        public DbSet<PortfolioItem> PortfolioItems { get; set; }
         public DbSet<WatchlistItem> WatchlistItems {  get; set; }
 
         public StockDataContext(DbContextOptions options) { }
