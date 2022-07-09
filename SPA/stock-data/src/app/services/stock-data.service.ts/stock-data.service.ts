@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LazyLoadTableData, PagedResult, WatchlistItem } from 'src/app/types';
-import { AuthenticationService } from '../authentication';
 import { endpoints } from './stock-data.endpoints';
 
 @Injectable({
@@ -12,12 +11,7 @@ export class StockDataService {
   private _backButtonVisible = new BehaviorSubject<boolean>(false);
   backButtonVisible$ = this._backButtonVisible.asObservable();
 
-  userId = this.authService.userId;
-
-  constructor(
-    private authService: AuthenticationService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   public displayBackButton(isVisible: boolean) {
     this._backButtonVisible.next(isVisible);
