@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, switchMap } from 'rxjs';
 import { FinnhubService } from 'src/app/services';
-import { RecommendationTrends } from 'src/app/types/recommendation-trends.type';
 
 @Component({
   selector: 'app-recommendation-trends',
@@ -19,14 +18,8 @@ export class RecommendationTrendsComponent {
   _data = new BehaviorSubject<string>(undefined);
   data$ = this._data.asObservable().pipe(
     filter((x) => !!x?.length),
-    switchMap((symbol) => this.getRecommendationTrends(symbol))
+    switchMap((symbol) => this.finnhubService.getRecommendationTrends(symbol))
   );
 
   constructor(private finnhubService: FinnhubService) {}
-
-  private getRecommendationTrends(
-    symbol: string
-  ): Observable<RecommendationTrends[]> {
-    return this.finnhubService.getRecommendationTrends(symbol);
-  }
 }

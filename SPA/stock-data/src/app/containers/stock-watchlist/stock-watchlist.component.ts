@@ -8,10 +8,12 @@ import {
   Subject,
   switchMap,
   take,
+  takeUntil,
   tap,
 } from 'rxjs';
+import { SubscribableBase } from 'src/app/base/subscribable-base';
 import { AuthenticationService } from 'src/app/services/authentication';
-import { StockDataService } from 'src/app/services/stock-data.service.ts';
+import { StockDataService } from 'src/app/services/stock-data';
 import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
 
 @Component({
@@ -20,7 +22,10 @@ import { LazyLoadTableData, WatchlistItem } from 'src/app/types';
   styleUrls: ['./stock-watchlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StockWatchlistComponent implements OnInit {
+export class StockWatchlistComponent
+  extends SubscribableBase
+  implements OnInit
+{
   totalRows: number;
   private userId: string;
 
@@ -43,7 +48,9 @@ export class StockWatchlistComponent implements OnInit {
     private authService: AuthenticationService,
     private stockDataService: StockDataService,
     private messageService: MessageService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     combineLatest([this.userData$, this.tableData$, this.reloadDataAction$])
@@ -64,7 +71,8 @@ export class StockWatchlistComponent implements OnInit {
           this._watchlistItems.next(response.results);
 
           this._loading.next(false);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }

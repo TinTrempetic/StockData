@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication';
-import { StockDataService } from 'src/app/services/stock-data.service.ts';
+import { StockDataService } from 'src/app/services/stock-data';
 
 @Component({
   selector: 'app-header',

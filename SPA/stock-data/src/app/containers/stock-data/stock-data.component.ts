@@ -5,8 +5,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, filter, tap } from 'rxjs';
-import { StockDataService } from 'src/app/services/stock-data.service.ts';
+import { BehaviorSubject, filter, takeUntil, tap } from 'rxjs';
+import { SubscribableBase } from 'src/app/base/subscribable-base';
+import { StockDataService } from 'src/app/services/stock-data';
 
 @Component({
   selector: 'app-stock-data',
@@ -14,14 +15,19 @@ import { StockDataService } from 'src/app/services/stock-data.service.ts';
   styleUrls: ['./stock-data.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StockDataComponent implements OnInit, OnDestroy {
+export class StockDataComponent
+  extends SubscribableBase
+  implements OnInit, OnDestroy
+{
+  private _symbol = new BehaviorSubject(undefined);
+  symbol$ = this._symbol.asObservable();
+
   constructor(
     private route: ActivatedRoute,
     private stockDataService: StockDataService
-  ) {}
-
-  private _symbol = new BehaviorSubject(undefined);
-  symbol$ = this._symbol.asObservable();
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.route.params
@@ -30,12 +36,14 @@ export class StockDataComponent implements OnInit, OnDestroy {
         tap((data) => {
           this._symbol.next(data['symbol']);
           this.stockDataService.displayBackButton(true);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
+    this.destroy$.next();
     this.stockDataService.displayBackButton(false);
   }
 }

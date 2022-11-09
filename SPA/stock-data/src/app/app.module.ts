@@ -21,7 +21,6 @@ import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -38,6 +37,7 @@ import { RecommendationTrendsComponent } from './containers/recommendation-trend
 import { StockDataComponent } from './containers/stock-data/stock-data.component';
 import { StockLookupComponent } from './containers/stock-lookup/stock-lookup.component';
 import { StockWatchlistComponent } from './containers/stock-watchlist/stock-watchlist.component';
+import { EarningsTimePipe } from './pipes';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -69,10 +69,10 @@ const routes: Routes = [
     CompanyNewsComponent,
     CompanyProfileComponent,
     StockDataComponent,
+    EarningsTimePipe,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     TabViewModule,
     TableModule,
     AutoCompleteModule,
