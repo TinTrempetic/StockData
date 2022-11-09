@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, switchMap } from 'rxjs';
 import { FinnhubService } from 'src/app/services';
-import { CompanyProfile } from 'src/app/types/company-profile.type';
 
 @Component({
   selector: 'app-company-profile',
@@ -20,12 +19,8 @@ export class CompanyProfileComponent {
 
   data$ = this._data.asObservable().pipe(
     filter((x) => !!x?.length),
-    switchMap((symbol) => this.getCompanyData(symbol))
+    switchMap((symbol) => this.finnhubService.getCompanyProfile(symbol))
   );
 
   constructor(private finnhubService: FinnhubService) {}
-
-  private getCompanyData(symbol: string): Observable<CompanyProfile> {
-    return this.finnhubService.getCompanyProfile(symbol);
-  }
 }

@@ -4,11 +4,7 @@
     (onChange)="resolutionChanged($event.value)"
   ></p-dropdown>
 
-  <div class="chart" #chart>
-    <p-chart
-      [height]="chart.offsetHeight.toString()"
-      type="line"
-      [data]="data$ | async"
-    ></p-chart>
+  <div class="chart">
+    <p-chart type="line" [data]="data$ | async"></p-chart>
   </div>
 </div>

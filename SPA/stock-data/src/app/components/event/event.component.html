@@ -31,9 +31,7 @@
         <strong>Estimated revenue: </strong
         >{{ earning.revenueEstimate ?? "Unknown" }}
       </p>
-      <p>
-        <strong>Time: </strong>{{ getEarningsTime(earning.hour) ?? "Unknown" }}
-      </p>
+      <p><strong>Time: </strong>{{ earning.hour | earningsTime }}</p>
     </p-accordionTab>
   </ng-container>
 </p-accordion>

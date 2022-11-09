@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { delay, filter, Subject, take, tap } from 'rxjs';
+import { delay, filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { SubscribableBase } from 'src/app/base/subscribable-base';
 import { EventType } from 'src/app/enums';
 import { FinnhubService } from 'src/app/services';
 import { Earnings, Ipo } from 'src/app/types';
@@ -11,7 +12,7 @@ import { Earnings, Ipo } from 'src/app/types';
   styleUrls: ['./events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent extends SubscribableBase implements OnInit {
   ipoMinDate = this.addDaysToDate(-180);
   ipoMaxDate = this.addDaysToDate(0);
   earningsMinDate = this.addDaysToDate(-30);
@@ -30,23 +31,36 @@ export class EventsComponent implements OnInit {
   private _ipo = new Subject<Ipo[]>();
   ipoData$ = this._ipo.asObservable();
 
+  private _loadCalendarEventsAction = new Subject<any>();
+  loadCalendarEventsAction$ = this._loadCalendarEventsAction
+    .asObservable()
+    .pipe(
+      switchMap(({ event, date }) => {
+        return this.finnhubService.getCalendarEvents(event, date);
+      }),
+      tap((data) => this.assignDataToTheObserver(data)),
+      takeUntil(this.destroy$)
+    );
+
   get eventTypeFormValue(): string {
     return this.form.get('event')?.value;
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private finnhubService: FinnhubService
-  ) {}
+  constructor(private fb: FormBuilder, private finnhubService: FinnhubService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.loadCalendarEventsAction$.subscribe();
 
     this.form.valueChanges
       .pipe(
         delay(100),
         filter(() => this.form.valid),
-        tap((value) => this.getEvents(value))
+        tap((value) => this._loadCalendarEventsAction.next(value)),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
@@ -56,20 +70,6 @@ export class EventsComponent implements OnInit {
       event: [, [Validators.required]],
       date: [, [Validators.required]],
     });
-  }
-
-  private getEvents(value: any): void {
-    if (this.form.invalid) return;
-
-    const { event, date } = value;
-
-    this.finnhubService
-      .getCalendarEvents(event, date)
-      .pipe(
-        tap((data) => this.assignDataToTheObserver(data)),
-        take(1)
-      )
-      .subscribe();
   }
 
   private assignDataToTheObserver(data: any): void {

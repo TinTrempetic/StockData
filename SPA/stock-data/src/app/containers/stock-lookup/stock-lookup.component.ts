@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
-import { Subject, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { SubscribableBase } from 'src/app/base/subscribable-base';
 import { FinnhubService } from 'src/app/services';
 import { StockLookupSelectItem } from 'src/app/types';
 
@@ -15,12 +17,19 @@ import { StockLookupSelectItem } from 'src/app/types';
   styleUrls: ['./stock-lookup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StockLookupComponent {
+export class StockLookupComponent extends SubscribableBase implements OnInit {
   private _clearLabelOnFocus: boolean;
   lookupText: string;
 
   private _suggestions = new Subject<StockLookupSelectItem[]>();
   suggestions$ = this._suggestions.asObservable();
+
+  private _loadSuggestionsAction = new Subject<string>();
+  loadSuggestionsAction$ = this._loadSuggestionsAction.asObservable().pipe(
+    switchMap((symbol) => this.finnhubService.stockLookup(symbol)),
+    tap((result) => this.updateSuggestions(result)),
+    takeUntil(this.destroy$)
+  );
 
   @Input() placeholder: string;
 
@@ -28,7 +37,13 @@ export class StockLookupComponent {
 
   @Output() stockSelected = new EventEmitter<string>();
 
-  constructor(private finnhubService: FinnhubService) {}
+  constructor(private finnhubService: FinnhubService) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.loadSuggestionsAction$.subscribe();
+  }
 
   public suggestionSelected(event: any): void {
     this._clearLabelOnFocus = true;
@@ -36,18 +51,15 @@ export class StockLookupComponent {
     this.stockSelected.emit(event.symbol);
   }
 
+  public getStockSuggestions(symbol: string): void {
+    this._loadSuggestionsAction.next(symbol);
+  }
+
   public clearLabel(): void {
     if (!this._clearLabelOnFocus) return;
 
     this._clearLabelOnFocus = false;
     this.lookupText = undefined;
-  }
-
-  public getStockSuggestions(symbol: string): void {
-    this.finnhubService
-      .stockLookup(symbol)
-      .pipe(tap((result) => this.updateSuggestions(result)))
-      .subscribe();
   }
 
   private updateSuggestions(suggestions: StockLookupSelectItem[]): void {
